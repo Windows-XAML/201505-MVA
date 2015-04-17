@@ -11,8 +11,11 @@ namespace Template10.Views
 {
     public sealed partial class Shell : Page
     {
+        private Frame contentFrame;
+
         public Shell(Frame frame)
         {
+            this.contentFrame = frame;
             this.InitializeComponent();
             this.ShellSplitView.Content = frame;
             var update = new Action(() =>
@@ -39,11 +42,11 @@ namespace Template10.Views
         public Mvvm.Command BackCommand { get { return _backCommand ?? (_backCommand = new Mvvm.Command(ExecuteBack, CanBack)); } }
         private bool CanBack()
         {
-            return this.Frame.CanGoBack;
+            return this.contentFrame.CanGoBack;
         }
         private void ExecuteBack()
         {
-            this.Frame.GoBack();
+            this.contentFrame.GoBack();
         }
 
         // menu
@@ -56,14 +59,22 @@ namespace Template10.Views
 
         // nav
         Mvvm.Command<NavType> _navCommand;
+
         public Mvvm.Command<NavType> NavCommand { get { return _navCommand ?? (_navCommand = new Mvvm.Command<NavType>(ExecuteNav)); } }
         private void ExecuteNav(NavType navType)
         {
             var type = navType.Type;
 
+            this.contentFrame.Navigate(navType.Type);
             // when we nav home, clear history
             if (type.Equals(typeof(Views.MainPage)))
-                this.Frame.BackStack.Clear();
+            {
+                this.contentFrame.BackStack.Clear();
+                if(this.BackCommand != null)
+                {
+                    this.BackCommand.RaiseCanExecuteChanged();
+                }
+            }
         }
 
         // utility
