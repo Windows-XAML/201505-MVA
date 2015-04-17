@@ -17,7 +17,7 @@ namespace Sample.Views
             // defaults
             if (splashBackground == null)
                 splashBackground = Colors.Red;
-            this.Background = new SolidColorBrush(Colors.Red);
+            this.Background = new SolidColorBrush(splashBackground.Value);
             if (splashImage == null)
                 splashImage = new Uri("ms-appx:///Assets/SplashScreen.png");
             SplashImage.ImageOpened += (s, e) => Window.Current.Activate();
