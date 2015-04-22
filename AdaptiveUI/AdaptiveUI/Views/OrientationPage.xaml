@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="AdaptiveUI.Views.OrientationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AdaptiveUI.Views"
+    xmlns:trig="using:Template10.Triggers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" RequestedTheme="Light">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveGroup">
+                <VisualState x:Name="wideState">
+                    <VisualState.Setters>
+                        <Setter Target="TextLayout.(RelativePanel.RightOf)" Value="ImageControl" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <trig:OrientationTrigger Orientation="Landscape" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="tallState">
+                    <VisualState.Setters>
+                        <Setter Target="TitleControl.FontSize" Value="24" />
+                        <Setter Target="ImageControl.Width" Value="500" />
+                        <Setter Target="ImageControl.Source" Value="ms-appx:///Assets/BirdsWide.jpg" />
+                        <Setter Target="TextLayout.(RelativePanel.Below)" Value="ImageControl" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <trig:OrientationTrigger Orientation="Portrait" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="TitleControl" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Naumann, Naturgeschichte der Vögel Mitteleuropas" VerticalAlignment="Top" Style="{StaticResource HeaderTextBlockStyle}" Margin="24,18"/>
+        <RelativePanel Grid.Row="1">
+            <Image x:Name="ImageControl" Source="ms-appx:///Assets/BirdsTall.jpg" Grid.Row="1" HorizontalAlignment="Left" Margin="10"/>
+            <ScrollViewer x:Name="TextLayout" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" HorizontalScrollMode="Disabled">
+                <RichTextBlock x:Name="TextControl" FontSize="32">
+                    <Paragraph>
+                        <Run Text="This sample demonstrates the use of "/>
+                        <Run FontWeight="Bold" Text="OrientationTrigger"/>
+                        <Run Text=" to change properties for two different modes:"/>
+                    </Paragraph>
+                    <Paragraph/>
+                    <Paragraph TextIndent="50">
+                        <Run Text="&#x27A4; Landscape" />
+                    </Paragraph>
+                    <Paragraph TextIndent="50">
+                        <Run Text="&#x27A4; Portrait" />
+                    </Paragraph>
+                    <Paragraph/>
+                    <Paragraph>
+                        <Run Text="The title font size changes, the image changes and the text will move either beside or below the image."/>
+                    </Paragraph>
+
+                </RichTextBlock>
+            </ScrollViewer>
+        </RelativePanel>
+    </Grid>
+</Page>

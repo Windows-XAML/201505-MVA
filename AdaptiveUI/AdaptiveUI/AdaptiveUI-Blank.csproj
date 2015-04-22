@@ -122,6 +122,9 @@
     <Compile Include="Triggers\InputTypeTrigger.cs" />
     <Compile Include="Triggers\NetworkAvailableStateTrigger.cs" />
     <Compile Include="Triggers\OrientationTrigger.cs" />
+    <Compile Include="Views\OrientationPage.xaml.cs">
+      <DependentUpon>OrientationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WindowSizePage.xaml.cs">
       <DependentUpon>WindowSizePage.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OrientationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
