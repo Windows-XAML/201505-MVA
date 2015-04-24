@@ -1,52 +1,90 @@
-﻿using System;
+﻿using AdaptiveUI.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
 namespace Template10.Triggers
 {
+    /// <summary>
+    /// A trigger that changes state based on the orientation of the current window.
+    /// </summary>
     public class OrientationTrigger : StateTriggerBase
     {
-        //Constructor
+        #region Constructors
+        /// <summary>
+        /// Initializes a new <see cref="OrientationTrigger"/> instance.
+        /// </summary>
         public OrientationTrigger()
         {
-            Window.Current.SizeChanged += Current_SizeChanged;
+            var win = Window.Current;
+
+            // EventWatcher.Create(win, nameof(win.SizeChanged));// 
+            // var ew = new WeakEvent<WindowSizeChangedEventHandler>(win, nameof(win.SizeChanged));
+            //ew.Subscribe(Window_SizeChanged);
+
+            WeakEvent.Subscribe<WindowSizeChangedEventHandler>(win, nameof(win.SizeChanged), Window_SizeChanged);
+
+
+            // win.SizeChanged += Current_SizeChanged;
+            CalculateState();
         }
-        //public properties to be set from XAML
+        #endregion // Constructors
+
+
+        #region Internal Methods
+        private void CalculateState()
+        {
+            var currentOrientation = ApplicationViewOrientation.Landscape;
+            var window = Window.Current;
+            if (window.Bounds.Width >= window.Bounds.Height)
+            {
+                currentOrientation = ApplicationViewOrientation.Landscape;
+            }
+            else
+            {
+                currentOrientation = ApplicationViewOrientation.Portrait;
+            }
+            SetTriggerValue(currentOrientation == orientation);
+        }
+        #endregion // Internal Methods
+
+        #region Overrides / Event Handlers
+        private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(string.Format("Size Changed {0}", this.GetHashCode()));
+            CalculateState();
+        }
+        #endregion // Overrides / Event Handlers
+
+
+        #region Public Properties
+        private ApplicationViewOrientation orientation;
+        /// <summary>
+        /// Gets or sets the orientation that will satisfy the trigger.
+        /// </summary>
+        /// <value>
+        /// The orientation that will satisfy the trigger.
+        /// </value>
         public ApplicationViewOrientation Orientation
         {
             get
             {
-                return _orientation;
+                return orientation;
             }
             set
             {
-                _orientation = value;
+                if (orientation != value)
+                {
+                    orientation = value;
+                    CalculateState();
+                }
             }
         }
-        //private properties
-        private ApplicationViewOrientation _orientation, _currentOrientation;
-        //Handle event to get current values
-        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
-        {
-            if (Window.Current.Bounds.Width >= Window.Current.Bounds.Height)
-            {
-                _currentOrientation = ApplicationViewOrientation.Landscape;
-            }
-            else
-            {
-                _currentOrientation = ApplicationViewOrientation.Portrait;
-            }
-            UpdateTrigger();
-        }
-        //Logic to evaluate and apply trigger value
-        private void UpdateTrigger()
-        {
-            SetTriggerValue(_currentOrientation == _orientation);
-        }
+        #endregion // Public Properties
     }
-
 }

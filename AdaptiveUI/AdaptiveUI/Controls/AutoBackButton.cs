@@ -22,40 +22,14 @@ namespace Template10.Controls
         public AutoBackButton()
         {
             this.DefaultStyleKey = typeof(AutoBackButton);
+            this.Loaded += AutoBackButton_Loaded;
         }
         #endregion // Constructors
 
 
         #region Internal Methods
-        private Frame FindFrame()
+        private void CalculateState()
         {
-            // Look for a frame in the current window
-            // TODO: May need to get from NavigationService in template
-            return Window.Current.Content as Frame;
-        }
-        #endregion // Internal Methods
-
-
-        #region Overrides / Event Handlers
-
-        protected override void OnApplyTemplate()
-        {
-            // Pass to base first
-            base.OnApplyTemplate();
-
-            // Try to find the back button
-            var BackButton = GetTemplateChild("BackButton") as Button;
-
-            // Try to subscribe to click event
-            if (BackButton != null)
-            {
-                BackButton.Click += BackButton_Click;
-            }
-            else
-            {
-                Debug.WriteLine("WARNING: Could not find a button named BackButton in the AutoBackButton template.");
-            }
-
             // If this OS has a hardware back button, hide. Otherwise, hide if there is no back stack.
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
@@ -78,6 +52,41 @@ namespace Template10.Controls
                         Visibility = Visibility.Collapsed;
                     }
                 }
+            }
+        }
+
+        private Frame FindFrame()
+        {
+            // Look for a frame in the current window
+            // TODO: May need to get from NavigationService in template
+            return Window.Current.Content as Frame;
+        }
+        #endregion // Internal Methods
+
+
+        #region Overrides / Event Handlers
+
+        private void AutoBackButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            CalculateState();
+        }
+
+        protected override void OnApplyTemplate()
+        {
+            // Pass to base first
+            base.OnApplyTemplate();
+
+            // Try to find the back button
+            var BackButton = GetTemplateChild("BackButton") as Button;
+
+            // Try to subscribe to click event
+            if (BackButton != null)
+            {
+                BackButton.Click += BackButton_Click;
+            }
+            else
+            {
+                Debug.WriteLine("WARNING: Could not find a button named BackButton in the AutoBackButton template.");
             }
         }
 
