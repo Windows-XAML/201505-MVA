@@ -113,7 +113,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\AutoBackButton.cs" />
-    <Compile Include="Extensions\EventWatcher.cs" />
     <Compile Include="Extensions\WeakEvent.cs" />
     <Compile Include="Model\SampleInfo.cs" />
     <Compile Include="Views\ApiInformationPage.xaml.cs">

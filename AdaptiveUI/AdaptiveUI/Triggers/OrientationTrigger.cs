@@ -21,16 +21,13 @@ namespace Template10.Triggers
         /// </summary>
         public OrientationTrigger()
         {
+            // Get application main window
             var win = Window.Current;
 
-            // EventWatcher.Create(win, nameof(win.SizeChanged));// 
-            // var ew = new WeakEvent<WindowSizeChangedEventHandler>(win, nameof(win.SizeChanged));
-            //ew.Subscribe(Window_SizeChanged);
-
+            // Create a weak subscription to the SizeChanged event so that we don't pin the trigger or page in memory
             WeakEvent.Subscribe<WindowSizeChangedEventHandler>(win, nameof(win.SizeChanged), Window_SizeChanged);
 
-
-            // win.SizeChanged += Current_SizeChanged;
+            // Calculate the initial state
             CalculateState();
         }
         #endregion // Constructors
@@ -56,7 +53,7 @@ namespace Template10.Triggers
         #region Overrides / Event Handlers
         private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(string.Format("Size Changed {0}", this.GetHashCode()));
+            // System.Diagnostics.Debug.WriteLine(string.Format("Size Changed {0}", this.GetHashCode()));
             CalculateState();
         }
         #endregion // Overrides / Event Handlers
