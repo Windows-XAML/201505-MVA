@@ -42,9 +42,10 @@ namespace Template10.Controls
     {
         #region Static Version
         #region Constants
+        private const string DisabledStateName = "Disabled";
+        private const string EnabledStateName = "Enabled";
         private const string HardwareButtonsType = "Windows.Phone.UI.Input.HardwareButtons";
         private const string NavButtonName = "NavButton";
-        private const string SymbolHolderName = "SymbolHolder";
         #endregion // Constants
 
 
@@ -65,9 +66,6 @@ namespace Template10.Controls
 
 
         #region Instance Version
-        #region Member Variables
-        private SymbolIcon symbolHolder;
-        #endregion // Member Variables
 
         #region Constructors
         public AutoNavButton()
@@ -82,29 +80,15 @@ namespace Template10.Controls
         #region Internal Methods
         private void CalculateState()
         {
-            // Set icon based on mode
-            if (symbolHolder != null)
-            {
-                switch (Mode)
-                {
-                    case AutoNavMode.Back:
-                        symbolHolder.Symbol = Symbol.Back;
-                        break;
-                    case AutoNavMode.Forward:
-                        symbolHolder.Symbol = Symbol.Forward;
-                        break;
-                    case AutoNavMode.Home:
-                        symbolHolder.Symbol = Symbol.Home;
-                        break;
-                }
-            }
+            // Switch the visual state to match the mode
+            VisualStateManager.GoToState(this, Mode.ToString(), true);
 
-            // If Mode is Back and this OS has a hardware back button, hide. Otherwise, hide if there is no back stack.
+            // If Mode is Back and this OS has a hardware back button, disable. Otherwise, disable if there is no back stack.
             if ((Mode == AutoNavMode.Back) && (ApiInformation.IsTypePresent(HardwareButtonsType)))
             {
-                Visibility = Visibility.Collapsed;
+                SetEnabled(false);
             }
-            // Visibility calculated based on Mode
+            // Enabled is calculated based on Mode
             else
             {
                 // Try to find the frame
@@ -119,19 +103,19 @@ namespace Template10.Controls
                         case (AutoNavMode.Home):
                             if (frame.CanGoBack)
                             {
-                                Visibility = Visibility.Visible;
+                                SetEnabled(true);
                             }
                             break;
                         case (AutoNavMode.Forward):
                             if (frame.CanGoForward)
                             {
-                                Visibility = Visibility.Visible;
+                                SetEnabled(true);
                             }
                             break;
 
                         default:
                             // Unknown mode (shouldn't happen)
-                            Visibility = Visibility.Collapsed;
+                            SetEnabled(false);
                             break;
                     }
                 }
@@ -143,6 +127,23 @@ namespace Template10.Controls
             // Look for a frame in the current window
             // TODO: May need to get from NavigationService in template
             return Window.Current.Content as Frame;
+        }
+
+        private void SetEnabled(bool enabled)
+        {
+            // The control has to be set to collapsed by default due to a bug in layout calculation
+            // When the control is collapsed, Load does not occur. Therefore when we go to enabled
+            // we need to make sure we're also visible.
+            if (enabled)
+            {
+                Visibility = Visibility.Visible;
+            }
+
+            // Which state?
+            var stateName = (enabled ? EnabledStateName : DisabledStateName);
+
+            // Go to the state
+            VisualStateManager.GoToState(this, EnabledStateName, true);
         }
 
         private bool TryNavigate()
@@ -251,15 +252,6 @@ namespace Template10.Controls
             else
             {
                 Debug.WriteLine(string.Format("WARNING: Could not find a button named '{0}' in the {1} template.", AutoNavButton.NavButtonName, typeof(AutoNavButton).Name));
-            }
-
-            // Try to find the symbol holder
-            symbolHolder = GetTemplateChild(AutoNavButton.SymbolHolderName) as SymbolIcon;
-
-            // If not found, warn
-            if (symbolHolder == null)
-            {
-                Debug.WriteLine(string.Format("WARNING: Could not find a SymbolIcon named '{0}' in the {1} template.", AutoNavButton.SymbolHolderName, typeof(AutoNavButton).Name));
             }
 
             // Update state

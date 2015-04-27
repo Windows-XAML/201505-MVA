@@ -112,7 +112,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AutoBackButton.cs" />
+    <Compile Include="Controls\AutoNavButton.cs" />
     <Compile Include="Extensions\WeakEvent.cs" />
     <Compile Include="Model\SampleInfo.cs" />
     <Compile Include="Views\ApiInformationPage.xaml.cs">

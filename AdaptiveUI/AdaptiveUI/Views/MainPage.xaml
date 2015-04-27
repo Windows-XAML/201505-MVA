@@ -14,10 +14,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <controls:AutoBackButton HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0"/>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Adaptive UI Samples" Style="{StaticResource HeaderTextBlockStyle}" Margin="24,18"/>
-        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <controls:AutoNavButton VerticalAlignment="Center" Margin="24,0,0,0" />
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Adaptive UI Samples" Style="{StaticResource HeaderTextBlockStyle}" Margin="24,18"/>
+            <controls:AutoNavButton Grid.Column="2" Mode="Forward" VerticalAlignment="Center" Margin="24,0,0,0" />
+        </Grid>
         
         <GridView x:Name="SampleGrid" Margin="40" Grid.Row="1" IsItemClickEnabled="True" ItemClick="SampleGrid_ItemClick">
             <GridView.ItemTemplate>
