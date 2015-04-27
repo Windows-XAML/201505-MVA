@@ -15,6 +15,14 @@ namespace Template10.Common
     // - NavigationService is an automatic property of this class
     public abstract class BootStrapper : Application
     {
+        /// <summary>
+        /// Event to allow views and viewmodels to intercept the Hardware/Shell Back request and 
+        /// implement their own logic, such as closing a dialog. In your event handler, set the
+        /// Handled property of the BackRequestedEventArgs to true if you do not want a Page
+        /// Back navigation to occur.
+        /// </summary>
+        public event EventHandler<Windows.UI.Core.BackRequestedEventArgs> BackRequested;
+
         public BootStrapper()
         {
             this.Resuming += (s, e) =>
@@ -60,11 +68,11 @@ namespace Template10.Common
 
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
+            UIElement splashScreen = default(UIElement);
             if (this.SplashFactory != null)
             {
-                Window.Current.Content = this.SplashFactory(e.SplashScreen);
-                Window.Current.Activate();
-                Window.Current.Content = null;
+                splashScreen = this.SplashFactory(e.SplashScreen);
+                Window.Current.Content = splashScreen;
             }
 
             this.RootFrame = this.RootFrame ?? new Frame();
@@ -74,21 +82,50 @@ namespace Template10.Common
             // the user may override to set custom content
             await OnInitializeAsync();
 
-            // if the user didn't set custom content, use frame
-            if (Window.Current.Content == null)
-            { Window.Current.Content = this.RootFrame; }
-
             if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
                 try { /* TODO: restore state */ }
-                catch { /* TODO: handle fail */ }
+                finally { await this.OnLaunchedAsync(e); }
             }
             else
             {
-                // this is to handle any other type of launch
                 await this.OnLaunchedAsync(e);
             }
+
+            // if the user didn't already set custom content use rootframe
+            if (Window.Current.Content == splashScreen)
+            {
+                Window.Current.Content = this.RootFrame;
+            }
+            if (Window.Current.Content == null)
+            {
+                Window.Current.Content = this.RootFrame;
+            }
             Window.Current.Activate();
+
+            // Hook up the default Back handler
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+        }
+
+        /// <summary>
+        /// Default Hardware/Shell Back handler overrides standard Back behavior that navigates to previous app
+        /// in the app stack to instead cause a backward page navigation.
+        /// Views or Viewodels can override this behavior by handling the BackRequested event and setting the
+        /// Handled property of the BackRequestedEventArgs to true.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnBackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
+        {
+            BackRequested?.Invoke(this, e);
+            if (!e.Handled)
+            {
+                if (this.RootFrame.CanGoBack)
+                {
+                    RootFrame.GoBack();
+                    e.Handled = true;
+                }
+            }
         }
 
         #region overrides

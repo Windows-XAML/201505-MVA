@@ -5,7 +5,7 @@
     xmlns:views="using:Template10.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" RequestedTheme="Dark">
+    mc:Ignorable="d">
 
     <Page.Resources>
 
@@ -24,7 +24,7 @@
 
     <SplitView x:Name="ShellSplitView">
         <SplitView.Pane>
-            <Grid>
+            <Grid Background="{StaticResource SplitViewBackgroundBrush}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -38,14 +38,14 @@
                         <!-- back -->
                         <RadioButton Checked="DontCheck" Command="{Binding BackCommand}"  Background="{StaticResource SystemControlBackgroundAccentBrush}">
                             <RadioButton.Tag>
-                                <TextBlock Text="" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
+                                <TextBlock Text="{StaticResource BackButtonText}" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
                             </RadioButton.Tag>
                         </RadioButton>
 
                         <!-- hamburger -->
                         <RadioButton Checked="DontCheck" Command="{Binding MenuCommand}">
                             <RadioButton.Tag>
-                                <TextBlock Text="" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
+                                <TextBlock Text="{StaticResource MenuButtonText}" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
                             </RadioButton.Tag>
                         </RadioButton>
 
