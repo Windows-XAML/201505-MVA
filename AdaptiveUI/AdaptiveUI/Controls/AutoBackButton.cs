@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation.Metadata;
+using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -17,12 +18,16 @@ namespace Template10.Controls
 {
     public sealed class AutoBackButton : Control
     {
+        #region Constants
+        private const string HardwareButtonsType = "Windows.Phone.UI.Input.HardwareButtons";
+        #endregion // Constants
 
         #region Constructors
         public AutoBackButton()
         {
             this.DefaultStyleKey = typeof(AutoBackButton);
             this.Loaded += AutoBackButton_Loaded;
+            this.Unloaded += AutoBackButton_Unloaded;
         }
         #endregion // Constructors
 
@@ -31,7 +36,7 @@ namespace Template10.Controls
         private void CalculateState()
         {
             // If this OS has a hardware back button, hide. Otherwise, hide if there is no back stack.
-            if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            if (ApiInformation.IsTypePresent(HardwareButtonsType))
             {
                 Visibility = Visibility.Collapsed;
             }
@@ -61,6 +66,18 @@ namespace Template10.Controls
             // TODO: May need to get from NavigationService in template
             return Window.Current.Content as Frame;
         }
+
+        private void TryGoBack()
+        {
+            // Get the frame
+            var frame = FindFrame();
+
+            // If found and can go back, go back
+            if ((frame != null) && (frame.CanGoBack))
+            {
+                frame.GoBack();
+            }
+        }
         #endregion // Internal Methods
 
 
@@ -68,7 +85,36 @@ namespace Template10.Controls
 
         private void AutoBackButton_Loaded(object sender, RoutedEventArgs e)
         {
+            // If hardware buttons are present, subscribe
+            if (ApiInformation.IsTypePresent(HardwareButtonsType))
+            {
+                HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+            }
+
+            // Always calcualte state
             CalculateState();
+        }
+
+        private void AutoBackButton_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // If hardware buttons are present, unsubscribe
+            if (ApiInformation.IsTypePresent(HardwareButtonsType))
+            {
+                HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+            }
+        }
+
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            // Only process if not already handled
+            if (!e.Handled)
+            {
+                // We'll handle it
+                e.Handled = true;
+
+                // Go back (assuming we have a frame)
+                TryGoBack();
+            }
         }
 
         protected override void OnApplyTemplate()
@@ -93,14 +139,7 @@ namespace Template10.Controls
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the frame
-            var frame = FindFrame();
-
-            // If found and can go back, go back
-            if ((frame != null) && (frame.CanGoBack))
-            {
-                frame.GoBack();
-            }
+            TryGoBack();
         }
         #endregion // Overrides / Event Handlers
     }
