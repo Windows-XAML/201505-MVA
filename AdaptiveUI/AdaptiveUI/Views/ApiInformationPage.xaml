@@ -11,13 +11,23 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="AdaptiveGroup">
+            <VisualStateGroup x:Name="ScannerGroup">
                 <VisualState x:Name="scannerAvailableState">
                     <VisualState.Setters>
                         <Setter Target="ScanButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <trig:ApiInformationTrigger ContractName="Windows.Devices.Scanners.ScannerDeviceContract" ContractMajorVersion="1" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="SettingsGroup">
+                <VisualState x:Name="settingsAvailableState">
+                    <VisualState.Setters>
+                        <Setter Target="SettingsButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <trig:ApiInformationTrigger TypeName="Windows.UI.ApplicationSettings.SettingsPane" />
                     </VisualState.StateTriggers>
                 </VisualState>
             </VisualStateGroup>
@@ -60,19 +70,17 @@
                 </Button.RenderTransform>
                 <SymbolIcon Symbol="Scan" />
             </Button>
-            <!--<RichTextBlock Grid.Row="3" FontSize="20">
+            <RichTextBlock Grid.Row="3" FontSize="20">
                 <Paragraph>
-                    <Run Text="If your device supports a printer ("/>
-                    <Run FontWeight="Bold" Text="Windows.Devices.Scanners.ScannerDeviceContract"/>
-                    <Run Text=") you will see a scanner button to the right."/>
+                    <Run Text="If your device supports the settings pane you will see a settings button to the right."/>
                 </Paragraph>
             </RichTextBlock>
-            <Button Grid.Row="3" Grid.Column="1"  x:Name="PrintButton" Margin="24,18" Visibility="Collapsed">
+            <Button Grid.Row="3" Grid.Column="1"  x:Name="SettingsButton" Margin="24,18" Visibility="Collapsed">
                 <Button.RenderTransform>
                     <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2" ScaleY="2" />
                 </Button.RenderTransform>
-                <SymbolIcon Symbol="Scan" />
-            </Button>-->
+                <SymbolIcon Symbol="Setting" />
+            </Button>
         </Grid>
     </Grid>
 </Page>
