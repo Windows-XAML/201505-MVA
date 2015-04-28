@@ -34,6 +34,9 @@ namespace AdaptiveUI.Views
 
         private void SampleGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
+            //var 
+            //await Windows.Graphics.Printing.PrintManager.ShowPrintUIAsync();
+
             // Which sample?
             var sample = (SampleInfo)e.ClickedItem;
 

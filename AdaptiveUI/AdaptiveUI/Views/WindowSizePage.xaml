@@ -50,7 +50,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
-            <controls:AutoBackButton HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0"/>
+            <controls:AutoNavButton HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0"/>
             <TextBlock x:Name="TitleControl" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Naumann, Naturgeschichte der Vögel Mitteleuropas" VerticalAlignment="Top" Style="{StaticResource HeaderTextBlockStyle}" Margin="24,18"/>
         </StackPanel>
         

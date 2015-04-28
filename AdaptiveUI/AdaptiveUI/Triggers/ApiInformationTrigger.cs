@@ -56,7 +56,7 @@ namespace Template10.Triggers
                 anySpecified = true;
 
                 // Evaluate, using minor version if specified
-                bool contractMet = (contractMinorVersion.HasValue ? ApiInformation.IsApiContractPresent(contractName, contractMajorVersion, contractMinorVersion.Value) : ApiInformation.IsApiContractPresent(contractName, contractMajorVersion));
+                bool contractMet = (contractMinorVersion.HasValue ? ApiInformation.IsApiContractPresent(contractName, (ushort)contractMajorVersion, (ushort)contractMinorVersion.Value) : ApiInformation.IsApiContractPresent(contractName, (ushort)contractMajorVersion));
                 if (contractMet)
                 {
                     anyMet = true;
@@ -87,14 +87,14 @@ namespace Template10.Triggers
 
 
         #region Public Properties
-        private ushort contractMajorVersion = 1;
+        private int contractMajorVersion = 1;
         /// <summary>
         /// Gets or sets the major version of the contract that must be present to satisfy the trigger.
         /// </summary>
         /// <value>
         /// The major version of the contract that must be present to satisfy the trigger. The default is 1.
         /// </value>
-        public ushort ContractMajorVersion
+        public int ContractMajorVersion
         {
             get
             {
@@ -104,20 +104,26 @@ namespace Template10.Triggers
             {
                 if (contractMajorVersion != value)
                 {
+                    // Validate range because the xaml value converter can't handle ushort. It can only int.
+                    if ((value < ushort.MinValue) || (value > ushort.MaxValue)) throw new ArgumentOutOfRangeException("value");
+
+                    // Store
                     contractMajorVersion = value;
+
+                    // Reevaluate
                     EvaluateTrigger();
                 }
             }
         }
 
-        private ushort? contractMinorVersion = null;
+        private int? contractMinorVersion = null;
         /// <summary>
         /// Gets or sets the minor version of the contract that must be present to satisfy the trigger.
         /// </summary>
         /// <value>
         /// The minor version of the contract that must be present to satisfy the trigger or <see langword="null"/> to not require a minor version. The default is null.
         /// </value>
-        public ushort? ContractMinorVersion
+        public int? ContractMinorVersion
         {
             get
             {
@@ -127,7 +133,16 @@ namespace Template10.Triggers
             {
                 if (contractMinorVersion != value)
                 {
+                    // If there is a value, validate range because the xaml value converter can't handle ushort. It can only int.
+                    if (value.HasValue)
+                    {
+                        if ((value.Value < ushort.MinValue) || (value.Value > ushort.MaxValue)) throw new ArgumentOutOfRangeException("value");
+                    }
+
+                    // Store
                     contractMinorVersion = value;
+
+                    // Reevaluate
                     EvaluateTrigger();
                 }
             }

@@ -112,7 +112,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AutoBackButton.cs" />
+    <Compile Include="Controls\AutoNavButton.cs" />
     <Compile Include="Extensions\WeakEvent.cs" />
     <Compile Include="Model\SampleInfo.cs" />
     <Compile Include="Views\ApiInformationPage.xaml.cs">
@@ -189,6 +189,11 @@
     <Reference Include="Microsoft.ApplicationInsights.Extensibility.Windows">
       <HintPath>packages\Microsoft.ApplicationInsights.WindowsStore.0.13.0-build26067\lib\win81\Microsoft.ApplicationInsights.Extensibility.Windows.winmd</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Windows Mobile, Version=10.0.0.1">
+      <Name>Windows Mobile Extension SDK</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

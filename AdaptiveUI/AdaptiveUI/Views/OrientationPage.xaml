@@ -8,12 +8,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" RequestedTheme="Light">
+    
+    <Page.Resources>
+        <x:Int32 x:Key="BodyFontSize">32</x:Int32>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveGroup">
                 <VisualState x:Name="wideState">
                     <VisualState.Setters>
+                        <!--<Setter Target="Resources.BodyFontSize" Value="32"/>-->
                         <Setter Target="TextLayout.(RelativePanel.RightOf)" Value="ImageControl" />
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
@@ -22,6 +27,7 @@
                 </VisualState>
                 <VisualState x:Name="tallState">
                     <VisualState.Setters>
+                        <!--<Setter Target="{ThemeResource ResourceKey=BodyFontSize}" Value="24"/>-->
                         <Setter Target="TitleControl.FontSize" Value="24" />
                         <Setter Target="ImageControl.Width" Value="500" />
                         <Setter Target="ImageControl.Source" Value="ms-appx:///Assets/BirdsWide.jpg" />
@@ -39,14 +45,14 @@
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal">
-            <controls:AutoBackButton HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0"/>
+            <controls:AutoNavButton HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0"/>
             <TextBlock x:Name="TitleControl" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Naumann, Naturgeschichte der Vögel Mitteleuropas" VerticalAlignment="Top" Style="{StaticResource HeaderTextBlockStyle}" Margin="24,18"/>
         </StackPanel>
         
         <RelativePanel Grid.Row="1">
             <Image x:Name="ImageControl" Source="ms-appx:///Assets/BirdsTall.jpg" Grid.Row="1" HorizontalAlignment="Left" Margin="10"/>
             <ScrollViewer x:Name="TextLayout" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" HorizontalScrollMode="Disabled">
-                <RichTextBlock x:Name="TextControl" FontSize="32">
+                <RichTextBlock x:Name="TextControl" FontSize="{ThemeResource ResourceKey=BodyFontSize}">
                     <Paragraph>
                         <Run Text="This sample demonstrates the use of "/>
                         <Run FontWeight="Bold" Text="OrientationTrigger"/>

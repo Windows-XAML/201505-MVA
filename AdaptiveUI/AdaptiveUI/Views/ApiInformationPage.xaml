@@ -4,18 +4,83 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:AdaptiveUI.Views"
     xmlns:controls="using:Template10.Controls"
+    xmlns:trig="using:Template10.Triggers"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" RequestedTheme="Light">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ScannerGroup">
+                <VisualState x:Name="scannerAvailableState">
+                    <VisualState.Setters>
+                        <Setter Target="ScanButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <trig:ApiInformationTrigger ContractName="Windows.Devices.Scanners.ScannerDeviceContract" ContractMajorVersion="1" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="SettingsGroup">
+                <VisualState x:Name="settingsAvailableState">
+                    <VisualState.Setters>
+                        <Setter Target="SettingsButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <trig:ApiInformationTrigger TypeName="Windows.UI.ApplicationSettings.SettingsPane" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <controls:AutoBackButton HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0"/>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="API Information Trigger" Style="{StaticResource HeaderTextBlockStyle}" Margin="24,18"/>
+            <controls:AutoNavButton Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0"/>
+            <TextBlock  Grid.Column="1" HorizontalAlignment="Left" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="API Information Trigger" Style="{StaticResource HeaderTextBlockStyle}" Margin="24,18"/>
         </StackPanel>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="130,130">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <RichTextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="32">
+                <Paragraph>
+                    <Run Text="This sample demonstrates the use of "/>
+                    <Run FontWeight="Bold" Text="ApiInformationTrigger"/>
+                    <Run Text=" to show and hide items:"/>
+                </Paragraph>
+            </RichTextBlock>
+            <RichTextBlock Grid.Row="2" FontSize="20">
+                <Paragraph>
+                    <Run Text="If your device supports a scanner you will see a scanner button to the right."/>
+                </Paragraph>
+            </RichTextBlock>
+            <Button Grid.Row="2" Grid.Column="1"  x:Name="ScanButton" Margin="24,18" Visibility="Collapsed">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2" ScaleY="2" />
+                </Button.RenderTransform>
+                <SymbolIcon Symbol="Scan" />
+            </Button>
+            <RichTextBlock Grid.Row="3" FontSize="20">
+                <Paragraph>
+                    <Run Text="If your device supports the settings pane you will see a settings button to the right."/>
+                </Paragraph>
+            </RichTextBlock>
+            <Button Grid.Row="3" Grid.Column="1"  x:Name="SettingsButton" Margin="24,18" Visibility="Collapsed">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2" ScaleY="2" />
+                </Button.RenderTransform>
+                <SymbolIcon Symbol="Setting" />
+            </Button>
+        </Grid>
     </Grid>
 </Page>
