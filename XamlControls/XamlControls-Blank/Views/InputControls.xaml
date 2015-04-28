@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Samples.Views.InputControls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Samples.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Samples.ViewModels"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:SampleViewModel />
+    </Page.DataContext>
+    
+    <Pivot Title="Input Controls" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <PivotItem Header="TextBox" DataContext="{Binding Item}">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+                <TextBox Header="Header Text" PlaceholderText="Placeholder Text" Margin="0,6" />
+                <TextBox Header="TextBox" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,6" />
+                <TextBox Height="96" TextWrapping="Wrap" Header="Multiline TextBox" AcceptsReturn="True" Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,6" />
+                <PasswordBox Header="PasswordBox" Password="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,6" IsPasswordRevealButtonEnabled="{Binding IsChecked, ElementName=IsPasswordRevealButtonEnabledCheckBox}" />
+                <CheckBox Content="IsPasswordRevealButtonEnabled" Margin="0,6" IsChecked="{Binding IsPasswordRevealButtonEnabled, Mode=TwoWay, ElementName=passwordBox}" x:Name="IsPasswordRevealButtonEnabledCheckBox" />
+            </StackPanel>
+        </PivotItem>
+    </Pivot>
+    
+</Page>
