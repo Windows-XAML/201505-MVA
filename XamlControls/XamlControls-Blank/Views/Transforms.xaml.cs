@@ -20,26 +20,11 @@ namespace Samples.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class Transforms : Page
     {
-        public MainPage()
+        public Transforms()
         {
             this.InitializeComponent();
-        }
-
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = e.ClickedItem as Models.MenuItem;
-            if (item.Key == 1)
-                this.Frame.Navigate(typeof(Views.LayoutControls));
-            else if (item.Key == 2)
-                this.Frame.Navigate(typeof(Views.InputControls));
-            else if (item.Key == 3)
-                this.Frame.Navigate(typeof(Views.ItemsControls));
-            else if (item.Key == 4)
-                this.Frame.Navigate(typeof(Views.GeometryControls));
-            else if (item.Key == 4)
-                this.Frame.Navigate(typeof(Views.Transforms));
         }
     }
 }

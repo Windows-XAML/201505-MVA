@@ -41,6 +41,7 @@
                         <models:MenuItem Key="2" Text="Input Controls" />
                         <models:MenuItem Key="3" Text="Items Controls" />
                         <models:MenuItem Key="4" Text="Geometry Controls" />
+                        <models:MenuItem Key="5" Text="Transforms" />
                     </ItemsControl.Items>
                 </GridView>
             </DataTemplate>
