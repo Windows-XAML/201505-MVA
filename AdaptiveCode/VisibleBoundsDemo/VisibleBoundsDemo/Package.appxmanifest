@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+
+  <Identity Name="5dcb4604-c7a0-4bc9-97a1-3bde63a00001"
+            Publisher="CN=Andy"
+            Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="5dcb4604-c7a0-4bc9-97a1-3bde63a00001" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>VisibleBoundsDemo</DisplayName>
+    <PublisherDisplayName>Andy</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+  </Dependencies>
+  
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+        Executable="$targetnametoken$.exe"
+        EntryPoint="VisibleBoundsDemo.App">
+        <uap:VisualElements
+            DisplayName="VisibleBoundsDemo"
+            Square150x150Logo="Assets\Logo.png"
+            Square44x44Logo="Assets\SmallLogo.png"
+            Description="VisibleBoundsDemo"
+            
+            BackgroundColor="transparent">
+            <uap:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png"/>
+            <uap:SplashScreen Image="Assets\SplashScreen.png"/>
+            <uap:ApplicationView MinWidth="width320"/> <!--Used in XAML Designer. DO NOT REMOVE-->
+        </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClientServer" />
+  </Capabilities>
+</Package>

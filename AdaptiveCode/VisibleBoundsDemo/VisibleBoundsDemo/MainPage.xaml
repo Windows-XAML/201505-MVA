@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="VisibleBoundsDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VisibleBoundsDemo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggers="using:VisibleBoundsDemo.Triggers"
+    mc:Ignorable="d">
+    <Page.Background>
+        <SolidColorBrush Color="Green"/>
+    </Page.Background>
+    <Page.BottomAppBar>
+        <CommandBar x:Name="commandBar" >
+            <AppBarButton Icon="Accept" Label="appbarbutton"/>
+            <AppBarButton Icon="Cancel" Label="appbarbutton"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="CadetBlue">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StatusBarControls.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ListView>
+            <x:String>One</x:String>
+            <x:String>Two</x:String>
+            <x:String>Three</x:String>
+            <x:String>Four</x:String>
+            <x:String>Five</x:String>
+            <x:String>Six</x:String>
+            <x:String>Seven</x:String>
+            <x:String>Eight</x:String>
+            <x:String>Nine</x:String>
+            <x:String>Ten</x:String>
+            <x:String>Eleven</x:String>
+            <x:String>Twelve</x:String>
+            <x:String>Thirteen</x:String>
+            <x:String>Fourteen</x:String>
+            <x:String>Fifteen</x:String>
+            <x:String>Sixteen</x:String>
+            <x:String>Seventeen</x:String>
+            <x:String>Eighteen</x:String>
+            <x:String>Nineteen</x:String>
+            <x:String>Twenty</x:String>
+            <CheckBox Content="CheckBox" Height="100" Width="100"/>
+        </ListView>
+        <Grid Margin="75,25,0,0">
+            <TextBlock x:Name="BoundsHeader" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Visible Bounds:" VerticalAlignment="Top"  FontSize="{StaticResource TextStyleLargeFontSize}"/>
+            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Top:"   
+                       FontSize="{StaticResource TextStyleLargeFontSize}"
+                       Margin="0,25,0,0"/>
+            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Bottom:" VerticalAlignment="Top" 
+                       Margin="0,50,0,0" FontSize="{StaticResource TextStyleLargeFontSize}"/>
+            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Height:" VerticalAlignment="Top" 
+                       Margin="0,75,0,0" FontSize="{StaticResource TextStyleLargeFontSize}"/>
+            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Width:" VerticalAlignment="Top" 
+                       Margin="0,100,0,0" FontSize="{StaticResource TextStyleLargeFontSize}"/>
+            <TextBlock x:Name="TopTextBox" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Margin="100,25,0,0" FontSize="{StaticResource TextStyleLargeFontSize}"/>
+            <TextBlock x:Name="BottomTextBox" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Margin="100,50,0,0" FontSize="{StaticResource TextStyleLargeFontSize}"/>
+            <TextBlock x:Name="HeightTextBox" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Margin="100,75,0,0" FontSize="{StaticResource TextStyleLargeFontSize}"/>
+            <TextBlock x:Name="WidthTextBox" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" Margin="100,100,0,0" FontSize="{StaticResource TextStyleLargeFontSize}"/>
+        </Grid>
+        <StackPanel HorizontalAlignment="Left" Margin="75,164,0,0" VerticalAlignment="Top" >
+            <RadioButton x:Name="ShowAppBarRadioButton" Content="Show AppBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsChecked="True" Checked="RadioButton_Checked"/>
+            <RadioButton x:Name="ShowOpaqueAppBarRadioButton" Content="Show Transparent AppBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Checked="RadioButton_Checked"/>
+            <RadioButton x:Name="HideAppBarRadioButton" Content="Hide AppBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Checked="RadioButton_Checked"/>
+        </StackPanel>
+        <StackPanel Margin="75,274,0,0">
+            <CheckBox x:Name="ExtendViewCheckBox" Content="Extend View into TitleBar" VerticalAlignment="Top" 
+                      Checked="ExtendViewButton_Checked" Unchecked="ExtendViewButton_Checked"/>
+            <CheckBox x:Name="ColourTitleBarButtonsCheckBox" Content="Change TitleBar appearance" VerticalAlignment="Top" 
+                      Checked="ColourTitleBarButtons_Checked" Unchecked="ColourTitleBarButtons_Checked"/>
+        </StackPanel>
+
+        <StackPanel x:Name="StatusBarControls" Orientation="Vertical" Margin="75,350,0,0" Visibility="Visible">
+            <CheckBox x:Name="StatusBarBackgroundCheckBox" Content="Set StatusBar Background" Checked="StatusBarBackgroundCheckBox_Checked" Unchecked="StatusBarBackgroundCheckBox_Unchecked"/>
+            <CheckBox x:Name="StatusBarHiddenCheckBox" Content="Set StatusBar Hidden"  Checked="StatusBarHiddenCheckBox_Checked" Unchecked="StatusBarHiddenCheckBox_Unchecked"/>            
+        </StackPanel>
+
+    </Grid>
+</Page>
