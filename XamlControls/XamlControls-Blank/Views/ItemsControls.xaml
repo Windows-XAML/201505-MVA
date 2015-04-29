@@ -7,7 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <vm:SampleViewModel xmlns:vm="using:Samples.ViewModels" />
+    </Page.DataContext>
 
-    </Grid>
+    <Pivot Title="Input Controls" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <PivotItem Header="ComboBox" DataContext="{Binding Item}" />
+        <PivotItem Header="FlipView" DataContext="{Binding Item}" />
+        <PivotItem Header="GridView" DataContext="{Binding Item}" />
+        <PivotItem Header="Hub" DataContext="{Binding Item}" />
+        <PivotItem Header="ListBox" DataContext="{Binding Item}" />
+        <PivotItem Header="ListView" DataContext="{Binding Item}" />
+        <PivotItem Header="Pivot" DataContext="{Binding Item}" />
+    </Pivot>
 </Page>
