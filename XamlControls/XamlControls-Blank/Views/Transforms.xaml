@@ -18,5 +18,7 @@
         <PivotItem Header="Rotate" DataContext="{Binding Item}"/>
         <PivotItem Header="Projection" DataContext="{Binding Item}"/>
         <PivotItem Header="Transform3d" DataContext="{Binding Item}"/>
+        <PivotItem Header="Clipping" DataContext="{Binding Item}"/>
+        <PivotItem Header="Brushes" DataContext="{Binding Item}"/>
     </Pivot>
 </Page>
