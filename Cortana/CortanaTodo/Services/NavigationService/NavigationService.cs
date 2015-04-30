@@ -7,22 +7,37 @@ namespace Template10.Services.NavigationService
 {
     public class NavigationService
     {
-        private readonly NavigationFacade _frame;
+        #region Constants
         private const string EmptyNavigation = "1,0";
+        #endregion // Constants
+
+        #region Member Variables
+        private readonly NavigationFacade frame;
+        #endregion // Member Variables
+
+
+        #region Constructors
+        /// <summary>
+        /// Initialzies a new <see cref="NavigationService"/> instance for the specified frame.
+        /// </summary>
+        /// <param name="frame">
+        /// The <see cref="Frame"/> that the navigation service will wrap.
+        /// </param>
+        public NavigationService(Frame frame)
+        {
+            this.frame = new NavigationFacade(frame);
+            this.frame.Navigating += (s, e) => NavigateFrom(false);
+            this.frame.Navigated += (s, e) => NavigateTo(e.NavigationMode, e.Parameter);
+        }
+        #endregion // Constructors
 
         string LastNavigationParameter { get; set; /* TODO: persist */ }
         string LastNavigationType { get; set; /* TODO: persist */ }
 
-        public NavigationService(Frame frame)
-        {
-            _frame = new NavigationFacade(frame);
-            _frame.Navigating += (s, e) => NavigateFrom(false);
-            _frame.Navigated += (s, e) => NavigateTo(e.NavigationMode, e.Parameter);
-        }
 
         void NavigateFrom(bool suspending)
         {
-            var page = _frame.Content as FrameworkElement;
+            var page = frame.Content as FrameworkElement;
             if (page != null)
             {
                 var dataContext = page.DataContext as INavigatable;
@@ -33,17 +48,17 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        void NavigateTo(NavigationMode mode, string parameter)
+        private void NavigateTo(NavigationMode mode, string parameter)
         {
             LastNavigationParameter = parameter;
-            LastNavigationType = _frame.Content.GetType().FullName;
+            LastNavigationType = frame.Content.GetType().FullName;
 
             if (mode == NavigationMode.New)
             {
                 // TODO: clear existing state
             }
 
-            var page = _frame.Content as FrameworkElement;
+            var page = frame.Content as FrameworkElement;
             if (page != null)
             {
                 var dataContext = page.DataContext as INavigatable;
@@ -61,20 +76,20 @@ namespace Template10.Services.NavigationService
             if (page.FullName.Equals(LastNavigationType)
                 && parameter == LastNavigationParameter)
                 return false;
-            return _frame.Navigate(page, parameter);
+            return frame.Navigate(page, parameter);
         }
 
         public void RestoreSavedNavigation() { /* TODO */ }
 
-        public void GoBack() { if (_frame.CanGoBack) _frame.GoBack(); }
+        public void GoBack() { if (frame.CanGoBack) frame.GoBack(); }
 
-        public bool CanGoBack { get { return _frame.CanGoBack; } }
+        public bool CanGoBack { get { return frame.CanGoBack; } }
 
-        public void GoForward() { _frame.GoForward(); }
+        public void GoForward() { frame.GoForward(); }
 
-        public bool CanGoForward { get { return _frame.CanGoForward; } }
+        public bool CanGoForward { get { return frame.CanGoForward; } }
 
-        public void ClearHistory() { _frame.SetNavigationState(EmptyNavigation); }
+        public void ClearHistory() { frame.SetNavigationState(EmptyNavigation); }
 
         public void Suspending() { NavigateFrom(true); }
 
@@ -90,9 +105,9 @@ namespace Template10.Services.NavigationService
             flyout.Show();
         }
 
-        public Type CurrentPageType { get { return _frame.CurrentPageType; } }
+        public Type CurrentPageType { get { return frame.CurrentPageType; } }
 
-        public string CurrentPageParam { get { return _frame.CurrentPageParam; } }
+        public string CurrentPageParam { get { return frame.CurrentPageParam; } }
     }
 }
 

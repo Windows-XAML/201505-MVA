@@ -117,7 +117,11 @@ namespace Template10.Common
         /// <param name="e"></param>
         private void OnBackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
-            BackRequested?.Invoke(this, e);
+            if (BackRequested != null)
+            {
+                BackRequested(this, e);
+            }
+
             if (!e.Handled)
             {
                 if (this.RootFrame.CanGoBack)
