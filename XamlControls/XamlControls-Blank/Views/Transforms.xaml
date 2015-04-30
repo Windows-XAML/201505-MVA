@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="Samples.Views.Transforms"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Samples.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:SampleViewModel xmlns:vm="using:Samples.ViewModels" />
+    </Page.DataContext>
+
+    <Pivot Title="Render Transforms" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <PivotItem Header="Translate" DataContext="{Binding Item}"/>
+        <PivotItem Header="Scale" DataContext="{Binding Item}"/>
+        <PivotItem Header="Skew" DataContext="{Binding Item}"/>
+        <PivotItem Header="Rotate" DataContext="{Binding Item}"/>
+        <PivotItem Header="Projection" DataContext="{Binding Item}"/>
+        <PivotItem Header="Transform3d" DataContext="{Binding Item}"/>
+        <PivotItem Header="Clipping" DataContext="{Binding Item}"/>
+        <PivotItem Header="Brushes" DataContext="{Binding Item}"/>
+    </Pivot>
+</Page>

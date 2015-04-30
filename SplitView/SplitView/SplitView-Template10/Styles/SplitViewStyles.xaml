@@ -5,12 +5,12 @@
     <!-- design reference http://osguni/?id=19359&Background=19361 -->
     
     <!-- temporary solution until generic.xaml is updated -->
-    <Color x:Key="SystemListAccentLowColor">#FF004780</Color>
+    <!--<Color x:Key="SystemListAccentLowColor">#FF004780</Color>
     <Color x:Key="SystemListAccentMediumColor">#FF005FAB</Color>
-    <Color x:Key="SystemListAccentHighColor">#FF006BC0</Color>
+    <Color x:Key="SystemListAccentHighColor">#FF006BC0</Color>-->
 
-    <SolidColorBrush x:Key="SplitViewBackgroundBrush" Color="{ThemeResource BaseMediumHighColor}" />
-    <SolidColorBrush x:Key="SplitViewForegroundBrush" Color="{ThemeResource BaseHighColor}" />
+    <SolidColorBrush x:Key="SplitViewBackgroundBrush" Color="{ThemeResource SystemBaseMediumColor}" Opacity="1" />
+    <SolidColorBrush x:Key="SplitViewForegroundBrush" Color="{ThemeResource SystemBaseHighColor}" />
     <SolidColorBrush x:Key="NavButtonPressedBackgroundBrush" Color="{ThemeResource SystemListMediumColor}" />
     <SolidColorBrush x:Key="NavButtonHoverBackgroundBrush" Color="{ThemeResource SystemListLowColor}" />
     <SolidColorBrush x:Key="NavButtonCheckedBackgroundBrush" Color="{ThemeResource SystemListAccentLowColor}" />
@@ -19,6 +19,10 @@
     
     <x:Double x:Key="SplitViewNormalNavFontSize">16</x:Double>
     <x:Double x:Key="SplitViewLargeNavFontSize">20</x:Double>
+    <x:Double x:Key="SplitViewBackButtonHeight">32</x:Double>
+    <x:String x:Key="BackButtonText"></x:String>
+    <x:String x:Key="ForwardButtonText"></x:String>
+    <x:String x:Key="MenuButtonText"></x:String>
 
     <Style TargetType="SplitView">
         <Setter Property="IsPaneOpen" Value="False" />
@@ -26,6 +30,7 @@
         <Setter Property="CompactPaneLength" Value="48" />
         <Setter Property="PaneBackground" Value="{ThemeResource SplitViewBackgroundBrush}" />
         <Setter Property="DisplayMode" Value="CompactOverlay" />
+        <Setter Property="RequestedTheme" Value="Dark" />
     </Style>
 
     <Style TargetType="TextBlock" x:Key="SplitViewTextBlockStyle">
