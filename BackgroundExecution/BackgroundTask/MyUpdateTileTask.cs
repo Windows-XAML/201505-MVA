@@ -37,9 +37,6 @@ namespace Template10
                     Debug.WriteLine("Background task canceled");
                 };
 
-                // fetch values
-                taskInstance.Task.Trigger as ApplicationTrigger
-
                 // perform task
                 var deferral = taskInstance.GetDeferral();
                 try
