@@ -1,0 +1,168 @@
+﻿<Page
+    x:Class="CortanaTodo.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CortanaTodo.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:CortanaTodo.ViewModels"
+    xmlns:models="using:CortanaTodo.Models"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance Type=vm:MainPageViewModel}">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
+
+    <Grid>
+        <SplitView x:Name="MainSplitView" DisplayMode="Inline" IsPaneOpen="{Binding IsChecked, ElementName=MenuToggle, Mode=TwoWay}" OpenPaneLength="480" >
+            <SplitView.Pane>
+                <Grid Background="Red" Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding Lists}" SelectedItem="{Binding CurrentList, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock FontSize="22" Text="{Binding Title}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <CommandBar Grid.Row="1" >
+                        <CommandBar.PrimaryCommands>
+                            <AppBarButton x:Name="AddListButton" Icon="Add" Label="Add" Command="{Binding Commands[AddList]}" />
+                            <AppBarButton x:Name="DeleteListButton" Icon="Remove" Label="Remove" Command="{Binding Commands[DeleteList]}" />
+                        </CommandBar.PrimaryCommands>
+                    </CommandBar>
+                </Grid>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid Margin="20" Background="Blue">
+                    <ListView ItemsSource="{Binding CurrentList.Items}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" IsChecked="{Binding IsComplete, Mode=TwoWay}" />
+                                    <TextBlock Grid.Column="1" FontSize="22" Text="{Binding Title}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+        <ToggleButton x:Name="MenuToggle" VerticalAlignment="Top" IsChecked="True" Visibility="Collapsed">
+            <FontIcon Glyph="&#xE700;" />
+        </ToggleButton>
+        <!--<Hub>
+            <Hub.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Contoso" />
+                    <Grid>
+                        <Ellipse Stroke="Black" StrokeThickness="1" Margin="9" VerticalAlignment="Top" Height="32" Width="32" />
+                        <AppBarButton Icon="Add" Command="{Binding Commands[Add]}" Foreground="Black" />
+                    </Grid>
+                </StackPanel>
+            </Hub.Header>
+            <HubSection VerticalContentAlignment="Stretch" x:Name="MainHubSection">
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding Lists}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="456" Margin="0,0,12,12">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <CommandBar RequestedTheme="Dark" Grid.Row="0" VerticalAlignment="Bottom" ClosedDisplayMode="Minimal">
+                                        <CommandBar.SecondaryCommands>
+                                            <AppBarButton Label="Delete list" Command="{Binding DataContext.RemoveListCommand, ElementName=MainHubSection}" CommandParameter="{Binding}" />
+                                            <AppBarButton Label="Delete selected task" Command="{Binding RemoveCommand}" />
+                                        </CommandBar.SecondaryCommands>
+                                    </CommandBar>
+                                    <Rectangle Grid.Row="1" Fill="Black" Opacity=".1" />
+                                    <TextBlock RequestedTheme="Light" Margin="24,12" FontSize="34" FontWeight="Light" Grid.Row="1" Text="{Binding TodoList.Title}" />
+                                    <ScrollViewer Grid.Row="2" VerticalAlignment="Stretch">
+                                        <ListView Padding="0,0,0,12" Margin="0" Grid.Row="2"
+                                                  IsItemClickEnabled="True" ItemClick="TodoItem_ItemClicked"
+                                                  ItemsSource="{Binding Items}" VerticalAlignment="Top" 
+                                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                                  CanDrag="True" CanDragItems="True" CanReorderItems="True">
+                                            <ListView.Background>
+                                                <SolidColorBrush Color="Black" Opacity=".1" />
+                                            </ListView.Background>
+                                            <ListView.ItemContainerTransitions>
+                                                <TransitionCollection>
+                                                    <AddDeleteThemeTransition />
+                                                </TransitionCollection>
+                                            </ListView.ItemContainerTransitions>
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Padding" Value="24,0,0,0" />
+                                                    <Setter Property="Margin" Value="0,0,0,0" />
+                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.Header>
+                                                <TextBox PlaceholderText="Add a new task" Margin="24,0,24,12" />
+                                            </ListView.Header>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Height="48">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="48" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="48" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <CheckBox IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay}" Grid.Column="0" VerticalAlignment="Center" Height="32" Width="32" />
+                                                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Foreground="Black" Text="{Binding TodoItem.Title}" FontWeight="Normal" LineHeight="20" />
+                                                        <Line Visibility="{Binding TodoItem.IsComplete, Converter={StaticResource VisibleWhenTrueConverter}}" Grid.Column="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" X1="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,24,0" />
+                                                        <CheckBox Grid.Column="2" VerticalAlignment="Center" Height="32" Width="32" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </ScrollViewer>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </HubSection>
+        </Hub>-->
+
+        <!--<ContentDialog x:Name="TodoEditorDialog" Title="Edit Task" PrimaryButtonText="Close" d:IsHidden="True">
+            <ContentDialog.Content>
+                <StackPanel>
+                    <TextBox Header="Item Title" Width="320" Text="{Binding TodoItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DatePicker Header="Due Date" Width="320" Date="{Binding TodoItem.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox Content="Is Complete" Width="320" IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </ContentDialog.Content>
+        </ContentDialog>-->
+        
+        <!-- busy indicator -->
+        <Popup IsOpen="{Binding IsBusy}" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid Background="White">
+                <StackPanel Orientation="Horizontal" Margin="100">
+                    <ProgressRing VerticalAlignment="Center" IsActive="True" />
+                    <TextBlock Foreground="DimGray" Text="Loading" FontSize="22" FontWeight="Light" Margin="12,0,0,0" />
+                </StackPanel>
+            </Grid>
+        </Popup>
+
+    </Grid>
+</Page>
