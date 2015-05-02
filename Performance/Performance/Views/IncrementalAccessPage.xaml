@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="Template10.Views.IncrementalAccessPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Template10.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Template10.ViewModels"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:IncrementalAccessPageViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="CVS" Source="{Binding Items}" />
+    </Page.Resources>
+
+    <Hub Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <HubSection Header="Incremental Access Virtualization">
+            <DataTemplate>
+                <GridView ItemsSource="{Binding Source={StaticResource CVS}}">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="200" Width="200" Background="SteelBlue">
+                                <TextBlock Text="{Binding TodoItem.Title}" />
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </DataTemplate>
+        </HubSection>
+    </Hub>
+</Page>

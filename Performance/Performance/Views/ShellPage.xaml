@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Template10.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Template10.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <SplitView x:Name="MySplitView" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+               CompactPaneLength="256" DisplayMode="CompactOverlay">
+        <SplitView.Pane>
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Width" Value="256" />
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                        <Setter Property="Margin" Value="0,3" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button Content="Random Access Virtualization" Click="Rav_Click" />
+                <Button Content="Incremental Access Virtualization" Click="Iav_Click" />
+                <Button Content="Deferred Phase Rendering" Click="Dpr_Click" />
+            </StackPanel>
+        </SplitView.Pane>
+    </SplitView>
+</Page>
