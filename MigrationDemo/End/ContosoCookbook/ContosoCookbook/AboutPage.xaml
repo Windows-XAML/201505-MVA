@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="ContosoCookbook.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ContosoCookbook"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot" 
+          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- TitlePanel -->
+        <StackPanel Grid.Row="0" Margin="20,17,0,28">
+            <TextBlock x:Uid="AppName" Text="CONTOSO COOKBOOK" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>
+            <TextBlock x:Uid="AboutPageHeader" Text="about" Margin="0,12,0,0" Style="{ThemeResource HeaderTextBlockStyle}"/>
+        </StackPanel>
+
+        <!--TODO: Content should be placed within the following grid 
+                  to show details for the current item -->
+        <Grid Grid.Row="1" x:Name="ContentRoot">
+            <StackPanel Orientation="Vertical" d:LayoutOverrides="Height" VerticalAlignment="Top" Margin="20,200,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="VersionText" Text="Version:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" Margin="0,0,10,0"/>
+                    <TextBlock Text="{Binding Version}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="PublishedByText" Text="Published by:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" Margin="0,0,10,0"/>
+                    <TextBlock Text="{Binding Publisher}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" />
+                </StackPanel>
+                <TextBlock x:Uid="AppRights" Text="AppRights" HorizontalAlignment="Left" FontSize="{StaticResource TextStyleLargeFontSize}" VerticalAlignment="Center" Margin="0,10,0,0" />
+                <TextBlock x:Uid="AppLimitation" Text="AppLimitation" HorizontalAlignment="Left" FontSize="{StaticResource TextStyleLargeFontSize}" VerticalAlignment="Center" Margin="0,15,0,0" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

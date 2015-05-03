@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="ActionCenterDemo.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ActionCenterDemo.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:ActionCenterDemo.ViewModels"
+    mc:Ignorable="d" RequestedTheme="Dark">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
+
+    <Grid>
+        <RelativePanel>
+
+            <TextBlock x:Name="InfoTextBlock" HorizontalAlignment="Left" Height="50" Margin="20,20,0,0" TextWrapping="Wrap" 
+                   Text="What the tile should look like on Start right now" VerticalAlignment="Top" 
+                   Width="140" FontSize="12" TextAlignment="Center"/>
+            <Canvas x:Name="BadgeCanvas" Margin="10,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150">
+                <Rectangle Fill="#FF03AEAE" HorizontalAlignment="Left" Height="150" Stroke="Black" VerticalAlignment="Top" Width="150"/>
+                <Image HorizontalAlignment="Left" Height="134" VerticalAlignment="Top" Width="150" Source="ms-appx:///Assets/Hen-01.png" Canvas.Top="16"/>
+                <Ellipse x:Name="circle" Fill="Black" HorizontalAlignment="Left" Height="29" Stroke="Black" 
+                     VerticalAlignment="Top" Width="29" Canvas.Left="107" Canvas.Top="13" 
+                     Visibility="{Binding TileSimulationBadgeCount, Converter={StaticResource CountToVisibilityConverter}}"/>
+                <TextBlock x:Name="BadgeCount" HorizontalAlignment="Center" Height="16" 
+                       TextWrapping="Wrap" Text="{Binding TileSimulationBadgeCount}" Foreground="White"
+                       VerticalAlignment="Center" Width="29" FontSize="16" TextAlignment="Center" 
+                       Canvas.Left="106" Canvas.Top="19" 
+                       Visibility="{Binding TileSimulationBadgeCount, Converter={StaticResource CountToVisibilityConverter}}"/>
+            </Canvas>
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    RelativePanel.RightOf="BadgeCanvas" Margin="4,60,0,0">
+                <Button x:Name="DeliverToastButton" Content="Send a toast" 
+                    HorizontalAlignment="Center" VerticalAlignment="Top" Width="140" Height="40" FontSize="12"
+                    Command="{Binding DeliverToastCommand}" />
+                <Button x:Name="button1" Content="Reset all" 
+                    HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="140" Height="40" FontSize="12"
+                    Command="{Binding ResetAllCountsCommand}"/>
+                <Button x:Name="button3" Content="Register Action Center &#xA;Changed Task" 
+                    HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="140" FontSize="12"
+                    Command="{Binding RegisterBGTaskCommand}"/>
+            </StackPanel>
+        </RelativePanel>
+
+        <GridView ItemsSource="{Binding MessageItems}"
+              SelectedItem="{Binding Selected, Mode=TwoWay}"
+              Margin="0,220,0,0" Padding="10,0,0,0">
+            <GridView.ItemTemplate>
+                <DataTemplate >
+                    <Grid Height="80" Width="240" >
+                        <StackPanel VerticalAlignment="Bottom">
+                            <StackPanel.Background>
+                                <SolidColorBrush Color="{Binding IsRead, Converter={StaticResource BoolToColorConverter}}" Opacity=".5" />
+                            </StackPanel.Background>
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" FontSize="12"
+                           Margin="5" MaxLines="1" TextTrimming="CharacterEllipsis"
+                           Foreground="White" Text="{Binding ID}" />
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" FontSize="12" 
+                           Margin="5" MaxLines="1" TextTrimming="CharacterEllipsis"
+                           Foreground="White" Text="{Binding Title}" />
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" FontSize="12" 
+                           Margin="5" MaxLines="1" TextTrimming="CharacterEllipsis"
+                           Foreground="White" Text="{Binding Body}" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</Page>

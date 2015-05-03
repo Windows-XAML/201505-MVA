@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+
+  <Identity
+    Name="6661385f-3d00-499d-8a85-165a46aba674"
+    Publisher="CN=Jerry"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="6661385f-3d00-499d-8a85-165a46aba674" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>Template10</DisplayName>
+    <PublisherDisplayName>Jerry</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.10069" MaxVersionTested="10.0.0.10069" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="Template10.App">
+      <uap:VisualElements
+        DisplayName="Action Center Demo"
+        Square150x150Logo="Assets\Logo.png"
+        Square44x44Logo="Assets\SmallLogo.png"
+        Description="Action Center Demo"
+        BackgroundColor="teal"
+        ToastCapable="true">
+        <uap:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\SmallLogo.png"/>
+      </uap:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ActionCenterHistoryChangedTask.ActionCenterChangedBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <!--This next bg task definition is temporary until Run on Lock Screen requirement goes away-->
+        <Extension Category="windows.backgroundTasks" EntryPoint="WindowsRuntimeComponent1.Class1">
+          <BackgroundTasks>
+            <Task Type="pushNotification" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

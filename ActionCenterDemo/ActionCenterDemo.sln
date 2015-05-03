@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionCenterDemo", "ActionCenterDemo\ActionCenterDemo.csproj", "{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionCenterHistoryChangedTask", "ActionCenterHistoryChangedTask\ActionCenterHistoryChangedTask.csproj", "{5680FB19-C161-46D2-A1AE-115954E020CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|ARM.ActiveCfg = Debug|ARM
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|ARM.Build.0 = Debug|ARM
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|ARM.Deploy.0 = Debug|ARM
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|x64.ActiveCfg = Debug|x64
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|x64.Build.0 = Debug|x64
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|x64.Deploy.0 = Debug|x64
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|x86.ActiveCfg = Debug|x86
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|x86.Build.0 = Debug|x86
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Debug|x86.Deploy.0 = Debug|x86
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|ARM.ActiveCfg = Release|ARM
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|ARM.Build.0 = Release|ARM
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|ARM.Deploy.0 = Release|ARM
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|x64.ActiveCfg = Release|x64
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|x64.Build.0 = Release|x64
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|x64.Deploy.0 = Release|x64
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|x86.ActiveCfg = Release|x86
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|x86.Build.0 = Release|x86
+		{ED4B4052-AE0D-44FA-B8C2-FE47919E9A90}.Release|x86.Deploy.0 = Release|x86
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Debug|ARM.ActiveCfg = Debug|ARM
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Debug|ARM.Build.0 = Debug|ARM
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Debug|x64.ActiveCfg = Debug|x64
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Debug|x64.Build.0 = Debug|x64
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Debug|x86.ActiveCfg = Debug|x86
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Debug|x86.Build.0 = Debug|x86
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Release|ARM.ActiveCfg = Release|ARM
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Release|ARM.Build.0 = Release|ARM
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Release|x64.ActiveCfg = Release|x64
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Release|x64.Build.0 = Release|x64
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Release|x86.ActiveCfg = Release|x86
+		{5680FB19-C161-46D2-A1AE-115954E020CF}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
