@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="ClientApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ClientApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel>
+            <RelativePanel Name="rpIn">
+                <TextBlock Name="lblIn" Width="80" Text="Input:" ></TextBlock>
+                <TextBox Name="textBox" RelativePanel.RightOf="lblIn" Width="200"></TextBox>
+            </RelativePanel>
+            <RelativePanel Name="rpOut">
+                <TextBlock Name="lblOut" Width="80" Text="Output: "  ></TextBlock>
+                <TextBox Name="textBoxOutput" RelativePanel.RightOf="lblOut" Width="200" ></TextBox>
+            </RelativePanel>
+            <RelativePanel Name="rpBtn">
+                <Button Name="btnEncode" Margin="0,12,0,0" Content="Encode" Click="ButtonEncode_Click" ></Button>
+                <Button Name="btnDecode" Margin="12,12,0,0" Content="Decode" Click="ButtonDecode_Click" RelativePanel.RightOf="btnEncode"></Button>
+            </RelativePanel>
+        </StackPanel>
+
+    </Grid>
+</Page>
