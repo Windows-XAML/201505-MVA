@@ -6,7 +6,7 @@ using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 
-namespace SimplePushDemp.Common
+namespace SimplePushDemo.Common
 {
     // BootStrapper is a drop-in replacement of Application
     // - OnInitializeAsync is the first in the pipeline, if launching

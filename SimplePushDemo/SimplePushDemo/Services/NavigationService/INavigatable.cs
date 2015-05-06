@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Windows.UI.Xaml.Navigation;
 
-namespace SimplePushDemp.Services.NavigationService
+namespace SimplePushDemo.Services.NavigationService
 {
     public interface INavigatable
     {

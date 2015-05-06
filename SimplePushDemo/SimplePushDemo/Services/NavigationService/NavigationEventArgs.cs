@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
-namespace SimplePushDemp.Services.NavigationService
+namespace SimplePushDemo.Services.NavigationService
 {
     public class NavigationEventArgs : EventArgs
     {

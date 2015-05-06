@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace SimplePushDemp
+namespace SimplePushDemo
 {
     sealed partial class App : Common.BootStrapper
     {

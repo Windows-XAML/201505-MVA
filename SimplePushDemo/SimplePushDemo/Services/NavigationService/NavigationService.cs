@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace SimplePushDemp.Services.NavigationService
+namespace SimplePushDemo.Services.NavigationService
 {
     public class NavigationService
     {
