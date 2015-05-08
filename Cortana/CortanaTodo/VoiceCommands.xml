@@ -22,8 +22,8 @@
 
     <Command Name="addNewList">
       <Example> Create a new list called Vacation Planning </Example>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> create [a] new list [called] {listName} </ListenFor>
-      <ListenFor RequireAppName="ExplicitlySpecified"> create [a] new {builtin:AppName} list [called] {listName} </ListenFor>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> create [a] new list [called] {listNameNL} </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> create [a] new {builtin:AppName} list [called] {listNameNL} </ListenFor>
       <Feedback> Creating </Feedback>
       <VoiceCommandService Target="CortanaTodoVoiceService"/>
     </Command>
@@ -49,9 +49,13 @@
       <Item> Rob </Item>
     </PhraseList>
 
+    <PhraseList Label="listName">
+      <Item> New List </Item>
+    </PhraseList>
+
     <PhraseTopic Label="msgText" Scenario="Natural Language"/>
 
-    <PhraseTopic Label="listName" Scenario="Natural Language"/>
+    <PhraseTopic Label="listNameNL" Scenario="Natural Language"/>
 
     <PhraseTopic Label="itemName" Scenario="Natural Language"/>
 

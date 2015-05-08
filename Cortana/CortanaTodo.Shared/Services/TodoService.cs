@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Template10.Services;
 using Template10.Services.FileService;
+using Windows.ApplicationModel.VoiceCommands;
 
 namespace CortanaTodo.Services
 {
@@ -199,6 +200,38 @@ namespace CortanaTodo.Services
 
             // Try to save to disk
             await FileHelper.WriteFileAsync<ObservableCollection<TodoList>>(ListFileName, cache, FileHelper.StorageStrategies.Roaming);
+
+            // When file saved to disk, update all phrase lists too
+            await UpdatePhraseLists();
+        }
+
+        /// <summary> 
+        /// Whenever lists are added or removed we trigger an update of the voice command Phrase list. This allows 
+        /// voice commands such as "Cortana TODO show list {listName} to be up to date. 
+        /// </summary> 
+        public async Task UpdatePhraseLists()
+        {
+            // If the cache isn't loaded, load it
+            var lists = await LoadListsAsync();
+            try
+            {
+                VoiceCommandDefinition commandDefinitions;
+                if (VoiceCommandDefinitionManager.InstalledCommandDefinitions.TryGetValue("CortanaTodoCommandSet_en-us", out commandDefinitions))
+                {
+                    //var listNames = (from l in lists
+                    //                 select l.Title).ToList();
+                    List<string> listNames = new List<string>();
+                    foreach (var list in lists)
+                    {
+                        listNames.Add(list.Title);
+                    }
+                    await commandDefinitions.SetPhraseListAsync("listName", listNames);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
+            }
         }
         #endregion // Public Methods
         #endregion // Instance Version

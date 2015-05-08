@@ -452,16 +452,6 @@ namespace CortanaTodo.Background
                         }
                     }
                     
-
-                    //while (true)
-                    //{
-                    //    // Load all lists. If this operation could take a long time (e.g. requiring 
-                    //    // a response from a remote web service) consider inserting a progress screen 
-                    //    // here to prevent Cortana from timing out. 
-                    //    await ReportProgressAsync("Doing Stuff");
-                    //    await Task.Delay(1000);
-                    //}
-
                     // Depending on the operation (defined in VoiceCommands.xml)
                     // perform the appropriate command.
                     string listName = null;
@@ -469,19 +459,19 @@ namespace CortanaTodo.Background
                     switch (voiceCommand.CommandName)
                     {
                         case "addToList":
-                            listName = voiceCommand.Properties["listName"][0];
-                            itemName = voiceCommand.Properties["itemName"][0];
+                            listName = voiceCommand.Properties["listName"].FirstOrDefault();
+                            itemName = voiceCommand.Properties["itemName"].FirstOrDefault();
                             await HandleAddToListAsync(listName, itemName);
                             break;
 
                         case "addNewList":
-                            listName = voiceCommand.Properties["listName"][0];
+                            listName = voiceCommand.Properties["listNameNL"].FirstOrDefault();
                             await HandleNewListAsync(listName);
                             break;
 
                         case "markItemComplete":
-                            listName = voiceCommand.Properties["listName"][0];
-                            itemName = voiceCommand.Properties["itemName"][0];
+                            listName = voiceCommand.Properties["listName"].FirstOrDefault();
+                            itemName = voiceCommand.Properties["itemName"].FirstOrDefault();
                             await HandleMarkItemCompleteAsync(listName, itemName);
                             break;
                             
