@@ -92,23 +92,18 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        void FacadeNavigatedEventHandler(object sender, NavigationEventArgs e)
         {
             foreach (var handler in _navigatedEventHandlers)
             {
-                var args = new NavigationEventArgs()
-                {
-                    NavigationMode = e.NavigationMode,
-                    Parameter = (e.Parameter == null) ? string.Empty : e.Parameter.ToString()
-                };
-                handler(this, args);
+                handler(this, e);
             }
             this.CurrentPageType = e.SourcePageType;
             this.CurrentPageParam = e.Parameter as String;
         }
 
-        readonly List<EventHandler> _navigatingEventHandlers = new List<EventHandler>();
-        public event EventHandler Navigating
+        readonly List<EventHandler<NavigatingCancelEventArgs>> _navigatingEventHandlers = new List<EventHandler<NavigatingCancelEventArgs>>();
+        public event EventHandler<NavigatingCancelEventArgs> Navigating
         {
             add
             {
@@ -134,7 +129,7 @@ namespace Template10.Services.NavigationService
         {
             foreach (var handler in _navigatingEventHandlers)
             {
-                handler(this, new EventArgs());
+                handler(this, e);
             }
         }
     }

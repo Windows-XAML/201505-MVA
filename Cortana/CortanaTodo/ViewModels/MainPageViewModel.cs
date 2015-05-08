@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services;
 using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel;
+using Template10.Services.NavigationService;
 
 namespace CortanaTodo.ViewModels
 {
@@ -61,12 +63,26 @@ namespace CortanaTodo.ViewModels
         #endregion // Internal Methods
 
         #region Overrides / Event Handlers
+        public override async Task HandleSuspendAsync(SuspendingEventArgs e)
+        {
+            await todoService.SaveAllAsync();
+            await base.HandleSuspendAsync(e);
+        }
+
         protected override Task LoadDefaultDataAsync()
         {
             // Load data with exception handling
             return RunWithErrorHandling(async ()=>
                 {
                     Lists = await todoService.LoadListsAsync();
+                    if (Lists.Count > 0)
+                    {
+                        CurrentList = Lists[0];
+                        if (CurrentList.Items.Count > 0)
+                        {
+                            CurrentItem = CurrentList.Items[0];
+                        }
+                    }
                 }
             , TaskRunOptions.WithFailure("Could not load lists."));
         }
@@ -108,10 +124,25 @@ namespace CortanaTodo.ViewModels
             todoService = TodoService.GetDefault();
         }
 
-        public override void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
+        public override void OnNavigated(object sender, NavigationEventArgsEx e)
         {
-            // Save the work
-            var t = SaveListAsync();
+            // Pass to base first
+            base.OnNavigated(sender, e);
+
+            // The parameter could be a list name if activated by speech
+            if (!string.IsNullOrEmpty(e.Parameter))
+            {
+                string listName = e.Parameter;
+
+                // Try to find the list
+                var list = lists.Where((l) => l.Title.Equals(listName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+                // If found, focus it
+                if (list != null)
+                {
+                    CurrentList = list;
+                }
+            }
         }
         #endregion // Overrides / Event Handlers
 

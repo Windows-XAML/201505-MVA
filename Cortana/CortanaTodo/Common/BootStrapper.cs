@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
+using Template10.Services.Lifecycle;
 
 namespace Template10.Common
 {
@@ -25,15 +26,26 @@ namespace Template10.Common
 
         public BootStrapper()
         {
-            this.Resuming += (s, e) =>
+            this.Resuming += async (s, e) =>
             {
+                // Let app handle first
                 OnResuming(s, e);
+
+                // Let NavigationService (and there ViewModel) handle
+                await ((ILifecycleAware)this.NavigationService)?.HandleResumeAsync(e);
             };
             this.Suspending += async (s, e) =>
             {
+                // Need time to do work
                 var deferral = e.SuspendingOperation.GetDeferral();
-                this.NavigationService.Suspending();
+
+                // Let NavigationService (and therefore ViewModel) handle first
+                await ((ILifecycleAware)this.NavigationService)?.HandleSuspendAsync(e);
+
+                // Let app handle
                 await OnSuspendingAsync(s, e);
+
+                // Done working
                 deferral.Complete();
             };
         }

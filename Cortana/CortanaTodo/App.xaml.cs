@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services;
 using Windows.ApplicationModel;
@@ -35,6 +36,40 @@ namespace CortanaTodo
             {
                 System.Diagnostics.Debug.WriteLine("Installing Voice Commands Failed: " + ex.ToString());
             }
+        }
+
+        public override async Task OnActivatedAsync(IActivatedEventArgs e)
+        {
+            // If the app was launched via some other mechanism than a Voice Command, exit. If 
+            // the app is able to act as a share target, or handle various file types, etc,  
+            // then developers should handle these cases here. 
+            if (e.Kind != ActivationKind.VoiceCommand)
+            {
+                return;
+            }
+
+            // The arguments can represent many different activation types. Cast it so we can get the 
+            // parameters we care about out. 
+            var commandArgs = e as VoiceCommandActivatedEventArgs;
+            var reco = commandArgs.Result;
+
+            // Get the name of the voice command and the text spoken. See AdventureWorksCommands.xml for 
+            // the <Command> tags this can be filled with. 
+            string commandName = reco.RulePath[0];
+            string listName = reco.SemanticInterpretation.Properties["listName"].FirstOrDefault();
+
+            // Multiple different voice commands may be supported, switch between them (The voiceCommandName 
+            switch (commandName)
+            {
+                case "showList":
+                    NavigationService.Navigate(typeof(Views.MainPage), listName);
+                    break;
+                default:
+                    // If we can't determine what page to launch, go to the default entry point. 
+                    NavigationService.Navigate(typeof(Views.MainPage));
+                    break;
+            }
+            await base.OnActivatedAsync(e);
         }
 
         public override Task OnLaunchedAsync(ILaunchActivatedEventArgs e)

@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.FileService
 {
-    class FileHelper
+    static public class FileHelper
     {
         /// <summary>Returns if a file is found in the specified storage strategy</summary>
         /// <param name="key">Path of the file in storage</param>
         /// <param name="location">Location storage strategy</param>
         /// <returns>Boolean: true if found, false if not found</returns>
-        public async Task<bool> FileExistsAsync(string key, StorageStrategies location = StorageStrategies.Local)
+        static public async Task<bool> FileExistsAsync(string key, StorageStrategies location = StorageStrategies.Local)
         {
             return (await GetIfFileExistsAsync(key, location)) != null;
         }
 
-        public async Task<bool> FileExistsAsync(string key, Windows.Storage.StorageFolder folder)
+        static public async Task<bool> FileExistsAsync(string key, Windows.Storage.StorageFolder folder)
         {
             return (await GetIfFileExistsAsync(key, folder)) != null;
         }
@@ -26,7 +26,7 @@ namespace Template10.Services.FileService
         /// <summary>Deletes a file in the specified storage strategy</summary>
         /// <param name="key">Path of the file in storage</param>
         /// <param name="location">Location storage strategy</param>
-        public async Task<bool> DeleteFileAsync(string key, StorageStrategies location = StorageStrategies.Local)
+        static public async Task<bool> DeleteFileAsync(string key, StorageStrategies location = StorageStrategies.Local)
         {
             var _File = await GetIfFileExistsAsync(key, location);
             if (_File != null)
@@ -39,7 +39,7 @@ namespace Template10.Services.FileService
         /// <param name="key">Path to the file in storage</param>
         /// <param name="location">Location storage strategy</param>
         /// <returns>Specified type T</returns>
-        public async Task<T> ReadFileAsync<T>(string key, StorageStrategies location = StorageStrategies.Local)
+        static public async Task<T> ReadFileAsync<T>(string key, StorageStrategies location = StorageStrategies.Local)
         {
             try
             {
@@ -53,9 +53,10 @@ namespace Template10.Services.FileService
                 var _Result = Deserialize<T>(_String);
                 return _Result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                System.Diagnostics.Debug.WriteLine(string.Format("Error Reading File: {0}", ex.Message));
+                throw ex;
             }
         }
 
@@ -64,19 +65,27 @@ namespace Template10.Services.FileService
         /// <param name="key">Path to the file in storage</param>
         /// <param name="value">Instance of object to be serialized and written</param>
         /// <param name="location">Location storage strategy</param>
-        public async Task<bool> WriteFileAsync<T>(string key, T value, StorageStrategies location = StorageStrategies.Local)
+        static public async Task<bool> WriteFileAsync<T>(string key, T value, StorageStrategies location = StorageStrategies.Local)
         {
-            // create file
-            var _File = await CreateFileAsync(key, location, Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            // convert to string
-            var _String = Serialize(value);
-            // save string to file
-            await Windows.Storage.FileIO.WriteTextAsync(_File, _String);
-            // result
-            return await FileExistsAsync(key, location);
+            try
+            {
+                // create file
+                var _File = await CreateFileAsync(key, location, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+                // convert to string
+                var _String = Serialize(value);
+                // save string to file
+                await Windows.Storage.FileIO.WriteTextAsync(_File, _String);
+                // result
+                return await FileExistsAsync(key, location);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(string.Format("Error Writing File: {0}", ex.Message));
+                throw ex;
+            }
         }
 
-        private async Task<Windows.Storage.StorageFile> CreateFileAsync(string key, StorageStrategies location = StorageStrategies.Local,
+        static private async Task<Windows.Storage.StorageFile> CreateFileAsync(string key, StorageStrategies location = StorageStrategies.Local,
             Windows.Storage.CreationCollisionOption option = Windows.Storage.CreationCollisionOption.OpenIfExists)
         {
             switch (location)
@@ -92,7 +101,7 @@ namespace Template10.Services.FileService
             }
         }
 
-        private async Task<Windows.Storage.StorageFile> GetIfFileExistsAsync(string key, Windows.Storage.StorageFolder folder,
+        static private async Task<Windows.Storage.StorageFile> GetIfFileExistsAsync(string key, Windows.Storage.StorageFolder folder,
             Windows.Storage.CreationCollisionOption option = Windows.Storage.CreationCollisionOption.FailIfExists)
         {
             Windows.Storage.StorageFile retval;
@@ -112,7 +121,7 @@ namespace Template10.Services.FileService
         /// <param name="key">Path of the file in storage</param>
         /// <param name="location">Location storage strategy</param>
         /// <returns>StorageFile</returns>
-        private async Task<Windows.Storage.StorageFile> GetIfFileExistsAsync(string key,
+        static private async Task<Windows.Storage.StorageFile> GetIfFileExistsAsync(string key,
             StorageStrategies location = StorageStrategies.Local,
             Windows.Storage.CreationCollisionOption option = Windows.Storage.CreationCollisionOption.FailIfExists)
         {
@@ -143,7 +152,7 @@ namespace Template10.Services.FileService
             return retval;
         }
 
-        private string Serialize<T>(T item)
+        static private string Serialize<T>(T item)
         {
             return JsonConvert.SerializeObject(item,
                 Formatting.None, new JsonSerializerSettings()
@@ -153,7 +162,7 @@ namespace Template10.Services.FileService
                 });
         }
 
-        private T Deserialize<T>(string json)
+        static private T Deserialize<T>(string json)
         {
             return JsonConvert.DeserializeObject<T>(json);
         }

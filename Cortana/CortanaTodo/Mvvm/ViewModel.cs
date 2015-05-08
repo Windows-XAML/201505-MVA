@@ -19,7 +19,7 @@ namespace Template10.Mvvm
     /// <summary>
     /// A base class for ViewModels
     /// </summary>
-    public abstract class ViewModel : VMBase, INavigatable
+    public abstract class ViewModel : VMBase, INavigationAware
     {
         #region Constructors
         /// <summary>
@@ -170,34 +170,28 @@ namespace Template10.Mvvm
 
         #region Overridables / Event Triggers
         /// <summary>
-        /// Allows inherited classes to handle navigation to the ViewModel (and page).
+        /// Allows inherited classes to handle when navigation is starting.
         /// </summary>
-        /// <param name="parameter">
-        /// The parameter used as part of navigation.
+        /// <param name="sender">
+        /// The sender of the event (usually the frame).
         /// </param>
-        /// <param name="mode">
-        /// The navigation mode (New, Back, Forward, etc.)
+        /// <param name="e">
+        /// A <see cref="NavigatingCancelEventArgs"/> that contains the event data.
         /// </param>
-        /// <param name="state">
-        /// Any persisted state for the ViewModel.
-        /// </param>
-        public override void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
+        public override void OnNavigating(object sender, NavigatingCancelEventArgs e)
         {
         }
 
         /// <summary>
-        /// Allows inherited classes to handle navigation from the ViewModel (and page).
+        /// Allows inherited classes to handle when navigation has completed.
         /// </summary>
-        /// <param name="parameter">
-        /// The parameter used as part of navigation.
+        /// <param name="sender">
+        /// The sender of the event (usually the frame).
         /// </param>
-        /// <param name="mode">
-        /// The navigation mode (New, Back, Forward, etc.)
+        /// <param name="e">
+        /// A <see cref="NavigationEventArgs"/> that contains the event data.
         /// </param>
-        /// <param name="state">
-        /// Any persisted state for the ViewModel.
-        /// </param>
-        public override void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
+        public override void OnNavigated(object sender, NavigationEventArgsEx e)
         {
         }
         #endregion // Overridables / Event Triggers

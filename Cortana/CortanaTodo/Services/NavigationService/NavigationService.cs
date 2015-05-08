@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Template10.Services.Lifecycle;
+using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    public class NavigationService
+    public class NavigationService : ILifecycleAware
     {
         #region Constants
         private const string EmptyNavigation = "1,0";
@@ -26,31 +29,31 @@ namespace Template10.Services.NavigationService
         public NavigationService(Frame frame)
         {
             this.frame = new NavigationFacade(frame);
-            this.frame.Navigating += (s, e) => NavigateFrom(false);
-            this.frame.Navigated += (s, e) => NavigateTo(e.NavigationMode, e.Parameter);
+            this.frame.Navigating += OnNavigating;
+            this.frame.Navigated += (s, e) => OnNavigated(this, new NavigationEventArgsEx(e));
         }
         #endregion // Constructors
 
         string LastNavigationParameter { get; set; /* TODO: persist */ }
         string LastNavigationType { get; set; /* TODO: persist */ }
 
-
-        void NavigateFrom(bool suspending)
+        private void OnNavigating(object sender, NavigatingCancelEventArgs e)
         {
             var page = frame.Content as FrameworkElement;
             if (page != null)
             {
-                var dataContext = page.DataContext as INavigatable;
+                var dataContext = page.DataContext as INavigationAware;
                 if (dataContext != null)
                 {
-                    dataContext.OnNavigatedFrom(null, suspending);
+                    dataContext.OnNavigating(sender, e);
                 }
             }
         }
 
-        private void NavigateTo(NavigationMode mode, string parameter)
+        private void OnNavigated(object sender, NavigationEventArgsEx e)
         {
-            LastNavigationParameter = parameter;
+            var mode = e.NavigationMode;
+            LastNavigationParameter = e.Parameter as string;
             LastNavigationType = frame.Content.GetType().FullName;
 
             if (mode == NavigationMode.New)
@@ -61,13 +64,46 @@ namespace Template10.Services.NavigationService
             var page = frame.Content as FrameworkElement;
             if (page != null)
             {
-                var dataContext = page.DataContext as INavigatable;
+                var dataContext = page.DataContext as INavigationAware;
                 if (dataContext != null)
                 {
-                    dataContext.OnNavigatedTo(parameter, mode, null);
+                    dataContext.OnNavigated(sender, e);
                 }
             }
         }
+
+        #region ILifecycleAware Interface
+        Task ILifecycleAware.HandleResumeAsync(object e)
+        {
+            var page = frame.Content as FrameworkElement;
+            if (page != null)
+            {
+                var lifcecycle = page.DataContext as ILifecycleAware;
+                if (lifcecycle != null)
+                {
+                    return lifcecycle.HandleResumeAsync(e);
+                }
+            }
+
+            return TaskHelper.CompletedTask;
+        }
+
+
+        Task ILifecycleAware.HandleSuspendAsync(SuspendingEventArgs e)
+        {
+            var page = frame.Content as FrameworkElement;
+            if (page != null)
+            {
+                var lifcecycle = page.DataContext as ILifecycleAware;
+                if (lifcecycle != null)
+                {
+                    return lifcecycle.HandleSuspendAsync(e);
+                }
+            }
+
+            return TaskHelper.CompletedTask;
+        }
+        #endregion // ILifecycleAware Interface
 
         public bool Navigate(Type page, string parameter = null)
         {
@@ -91,16 +127,15 @@ namespace Template10.Services.NavigationService
 
         public void ClearHistory() { frame.SetNavigationState(EmptyNavigation); }
 
-        public void Suspending() { NavigateFrom(true); }
 
         public void Show(SettingsFlyout flyout, string parameter = null)
         {
             if (flyout == null)
                 throw new ArgumentNullException(nameof(flyout));
-            var dataContext = flyout.DataContext as INavigatable;
+            var dataContext = flyout.DataContext as INavigationAware;
             if (dataContext != null)
             {
-                dataContext.OnNavigatedTo(parameter, NavigationMode.New, null);
+                dataContext.OnNavigated(this, new NavigationEventArgsEx());
             }
             flyout.Show();
         }
