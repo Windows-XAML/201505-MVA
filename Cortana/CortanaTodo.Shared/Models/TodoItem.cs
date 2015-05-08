@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
 using Template10.Models;
 
 namespace CortanaTodo.Models

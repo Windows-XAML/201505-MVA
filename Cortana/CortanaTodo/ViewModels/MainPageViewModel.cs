@@ -51,6 +51,7 @@ namespace CortanaTodo.ViewModels
         /// <returns>
         /// <c>true</c> if list-related commands are enabled; otherwise false.
         /// </returns>
+        [CommandCanExecute(CommandNames.AddItem)]
         [CommandCanExecute(CommandNames.SaveList)]
         [CommandCanExecute(CommandNames.DeleteList)]
         private bool ListCommandsEnabled()
@@ -77,7 +78,7 @@ namespace CortanaTodo.ViewModels
             {
                 new TodoList()
                 {
-                    Title = "List A",
+                    Title = "Groceries",
                     Items = new ObservableCollection<TodoItem>()
                     {
                         new TodoItem() { Title = "Item A" },
@@ -89,7 +90,7 @@ namespace CortanaTodo.ViewModels
 
                 new TodoList()
                 {
-                    Title = "List B",
+                    Title = "Home Improvement",
                     Items = new ObservableCollection<TodoItem>()
                     {
                         new TodoItem() { Title = "Item A" },
@@ -107,7 +108,7 @@ namespace CortanaTodo.ViewModels
             todoService = TodoService.GetDefault();
         }
 
-        protected override void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
+        public override void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
         {
             // Save the work
             var t = SaveListAsync();
@@ -116,6 +117,43 @@ namespace CortanaTodo.ViewModels
 
 
         #region Public Methods
+        /// <summary>
+        /// Adds a new item to the list.
+        /// </summary>
+        [Command(CommandNames.AddItem)]
+        public void AddItem()
+        {
+            if (currentList != null)
+            {
+                var item = new TodoItem()
+                {
+                    Title = "New Item"
+                };
+
+                currentList.Items.Insert(0, item);
+                CurrentItem = item;
+            }
+        }
+
+        /// <summary>
+        /// Adds a new list.
+        /// </summary>
+        [Command(CommandNames.AddList)]
+        public void AddList()
+        {
+            var list = new TodoList()
+            {
+                Title = "New List"
+            };
+            var item = new TodoItem()
+            {
+                Title = "New Item"
+            };
+            list.Items.Add(item);
+            lists.Add(list);
+            CurrentList = list;
+            CurrentItem = item;
+        }
         /// <summary>
         /// Deletes the current Item.
         /// </summary>
@@ -190,10 +228,23 @@ namespace CortanaTodo.ViewModels
         /// A <see cref="Task"/> that represents the operation.
         /// </returns>
         [Command(CommandNames.SaveList)]
-        public Task SaveListAsync()
+        public Task SaveListAsync(TodoList list = null)
         {
+            // If null, use current
+            if (list == null)
+            {
+                list = currentList;
+            }
+
             // Save list with exception handling
-            return RunWithErrorHandling(() => todoService.SaveAsync(currentList), TaskRunOptions.WithFailure(string.Format("Could not save {0} list", currentList.Title)));
+            if (list != null)
+            {
+                return RunWithErrorHandling(() => todoService.SaveAsync(list), TaskRunOptions.WithFailure(string.Format("Could not save {0} list", list.Title)));
+            }
+            else
+            {
+                return TaskHelper.CompletedTask;
+            }
         }
         #endregion // Public Methods
 
@@ -220,12 +271,24 @@ namespace CortanaTodo.ViewModels
         /// <value>
         /// The list that currently has focus.
         /// </value>
+        [CommandCanExecuteChanged(CommandNames.AddItem)]
         [CommandCanExecuteChanged(CommandNames.DeleteList)]
         [CommandCanExecuteChanged(CommandNames.SaveList)]
         public TodoList CurrentList
         {
             get { return currentList; }
-            set { Set(ref currentList, value); }
+            set
+            {
+                var previousList = currentList;
+                if (Set(ref currentList, value))
+                {
+                    // Was there a previously selected list? If so save it.
+                    if (previousList != null)
+                    {
+                        var t = SaveListAsync(previousList);
+                    }
+                }
+            }
         }
 
         private ObservableCollection<TodoList> lists;

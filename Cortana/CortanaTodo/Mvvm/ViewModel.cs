@@ -181,7 +181,7 @@ namespace Template10.Mvvm
         /// <param name="state">
         /// Any persisted state for the ViewModel.
         /// </param>
-        protected virtual void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
+        public override void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
         {
         }
 
@@ -197,23 +197,10 @@ namespace Template10.Mvvm
         /// <param name="state">
         /// Any persisted state for the ViewModel.
         /// </param>
-        protected virtual void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
+        public override void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
         {
         }
         #endregion // Overridables / Event Triggers
-
-
-        #region INavigatable Interface
-        void INavigatable.OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
-        {
-            this.OnNavigatedTo(parameter, mode, state);
-        }
-
-        void INavigatable.OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
-        {
-            this.OnNavigatedFrom(state, suspending);
-        }
-        #endregion // INavigatable Interface
 
 
         #region Public Properties

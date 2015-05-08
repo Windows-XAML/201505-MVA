@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="CortanaTodoCommandSet_en-us">
+    <AppName>Cortana Todo</AppName>
+    <Example> Show my Groceries list </Example>
+
+    <Command Name="showList">
+      <Example> Show my Groceries list </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> show [my] {listName} list </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> show [my] {builtin:AppName} {listName} list </ListenFor>
+      <Feedback> Showing your {listName} list </Feedback>
+      <Navigate />
+    </Command>
+
+    <Command Name="addToList">
+      <Example> Add Milk to my Groceries list </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> add {itemName} to [my] {listName} list </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> add {itemName} to [my] {builtin:AppName} {listName} list </ListenFor>
+      <Feedback> Adding </Feedback>
+      <VoiceCommandService Target="CortanaTodoVoiceService"/>
+    </Command>
+
+    <Command Name="addNewList">
+      <Example> Create a new list called Vacation Planning </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> create [a] new list [called] {listName} </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> create [a] new {builtin:AppName} list [called] {listName} </ListenFor>
+      <Feedback> Creating </Feedback>
+      <VoiceCommandService Target="CortanaTodoVoiceService"/>
+    </Command>
+
+    <Command Name="markItemComplete">
+      <Example> Mark Eggs complete in my Groceries list </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> mark {itemName} complete in [my] {listName} list </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> mark {itemName} complete in [my] {builtin:AppName} {listName} list </ListenFor>
+      <Feedback> Completing </Feedback>
+      <VoiceCommandService Target="CortanaTodoVoiceService"/>
+    </Command>
+
+    <Command Name="text">
+      <Example> text Avery I'm running late </Example>
+      <ListenFor> text {contact} {msgText} </ListenFor>
+      <Feedback> Texting {contact} {msgText} </Feedback>
+      <VoiceCommandService Target="CortanaTodoVoiceService"/>
+    </Command>
+
+    <PhraseList Label="contact">
+      <Item> Avery </Item>
+      <Item> Monica </Item>
+      <Item> Rob </Item>
+    </PhraseList>
+
+    <PhraseTopic Label="msgText" Scenario="Natural Language"/>
+
+    <PhraseTopic Label="listName" Scenario="Natural Language"/>
+
+    <PhraseTopic Label="itemName" Scenario="Natural Language"/>
+
+  </CommandSet>
+
+</VoiceCommands>

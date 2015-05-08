@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.Helpers;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
@@ -175,7 +174,7 @@ namespace Template10.Mvvm
         {
             if (CanExecute(parameter) && (executeMethod != null))
             {
-                if (canExecuteMethod.GetParameters().Length == 1)
+                if (executeMethod.GetParameters().Length == 1)
                 {
                     executeMethod.Invoke(commandSource, new object[] { parameter });
                 }

@@ -40,6 +40,11 @@
         BackgroundColor="#464646">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.appService" EntryPoint="CortanaTodo.Background.VoiceCommandService">
+          <uap:AppService Name="CortanaTodoVoiceService"/>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

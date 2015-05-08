@@ -58,7 +58,7 @@ namespace CortanaTodo.Services
             {
                 new TodoList()
                 {
-                    Title = "List A",
+                    Title = "Groceries",
                     Items = new ObservableCollection<TodoItem>()
                     {
                         new TodoItem() { Title = "Item A" },
@@ -70,7 +70,7 @@ namespace CortanaTodo.Services
 
                 new TodoList()
                 {
-                    Title = "List B",
+                    Title = "Home Supplies",
                     Items = new ObservableCollection<TodoItem>()
                     {
                         new TodoItem() { Title = "Item A" },
@@ -85,6 +85,8 @@ namespace CortanaTodo.Services
 
         public Task SaveAsync(TodoList list)
         {
+            // TODO: If not in cache, add to it
+            
             return TaskHelper.CompletedTask;
         }
     }
