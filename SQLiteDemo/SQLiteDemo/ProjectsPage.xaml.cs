@@ -100,6 +100,9 @@ namespace SQLiteDemo
 
             var customerID = (long)e.Parameter;
 
+            var custViewModel = CustomersViewModel.GetDefault();
+            pageTitle.Text = custViewModel.GetItem(customerID).Name;
+
             if (viewModel != null && (customerID == viewModel.CustomerId) && (timestamp >= viewModel.Timestamp))
                 return;
 
