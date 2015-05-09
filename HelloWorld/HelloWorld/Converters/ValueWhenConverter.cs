@@ -10,12 +10,12 @@ namespace Template10.Converters
             try
             {
                 if (value.Equals(When))
-                    return this.Value;
-                return this.Otherwise;
+                    return Value;
+                return Otherwise;
             }
             catch
             {
-                return this.Otherwise;
+                return Otherwise;
             }
         }
 

@@ -11,10 +11,10 @@ namespace Template10.ViewModels
         {
             _todoItemRepository = new Repositories.TodoItemRepository();
 
-            this.TodoList = list;
+            TodoList = list;
             foreach (var item in list.Items)
             {
-                this.Items.Add(new ViewModels.TodoItemViewModel(item));
+                Items.Add(new ViewModels.TodoItemViewModel(item));
             }
         }
 
@@ -37,28 +37,28 @@ namespace Template10.ViewModels
         {
             try
             {
-                var index = this.Items.IndexOf(this.SelectedItem);
+                var index = Items.IndexOf(SelectedItem);
                 var item = new ViewModels.TodoItemViewModel(_todoItemRepository.Factory(title: title));
-                this.TodoList.Items.Insert((index > -1) ? index : 0, item.TodoItem);
-                this.Items.Insert((index > -1) ? index : 0, item);
-                this.SelectedItem = item;
+                TodoList.Items.Insert((index > -1) ? index : 0, item.TodoItem);
+                Items.Insert((index > -1) ? index : 0, item);
+                SelectedItem = item;
             }
-            catch { this.SelectedItem = null; }
+            catch { SelectedItem = null; }
         }
 
         Mvvm.Command<Models.TodoItem> _RemoveCommand = default(Mvvm.Command<Models.TodoItem>);
         public Mvvm.Command<Models.TodoItem> RemoveCommand { get { return _RemoveCommand ?? (_RemoveCommand = new Mvvm.Command<Models.TodoItem>(ExecuteRemoveCommand, CanExecuteRemoveCommand)); } }
-        private bool CanExecuteRemoveCommand(Models.TodoItem param) { return this.SelectedItem != null; }
+        private bool CanExecuteRemoveCommand(Models.TodoItem param) { return SelectedItem != null; }
         private void ExecuteRemoveCommand(Models.TodoItem param)
         {
             try
             {
-                var index = this.Items.IndexOf(this.SelectedItem);
-                this.TodoList.Items.Remove(this.SelectedItem.TodoItem);
-                this.Items.Remove(this.SelectedItem);
-                this.SelectedItem = this.Items[index];
+                var index = Items.IndexOf(SelectedItem);
+                TodoList.Items.Remove(SelectedItem.TodoItem);
+                Items.Remove(SelectedItem);
+                SelectedItem = Items[index];
             }
-            catch { this.SelectedItem = null; }
+            catch { SelectedItem = null; }
         }
     }
 }

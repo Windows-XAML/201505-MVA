@@ -8,12 +8,12 @@ namespace Template10
     {
         public App() : base()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public override Task OnLaunchedAsync(ILaunchActivatedEventArgs e)
         {
-            this.NavigationService.Navigate(typeof(Views.MainPage));
+            NavigationService.Navigate(typeof(Views.MainPage));
             return Task.FromResult<object>(null);
         }
     }

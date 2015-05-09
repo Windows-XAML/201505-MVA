@@ -21,15 +21,17 @@ namespace Template10.ViewModels
             {
                 // designtime sample data
                 var data = _todoListRepository.Sample().Select(x => new ViewModels.TodoListViewModel(x));
-                this.TodoLists = new ObservableCollection<ViewModels.TodoListViewModel>(data);
+                TodoLists = new ObservableCollection<ViewModels.TodoListViewModel>(data);
             }
             else
             {
                 // update Commands
-                this.PropertyChanged += (s, e) =>
+                PropertyChanged += (s, e) =>
                 {
-                    this.AddListCommand.RaiseCanExecuteChanged();
-                    this.RemoveListCommand.RaiseCanExecuteChanged();
+                    AddListCommand.RaiseCanExecuteChanged();
+                    RemoveListCommand.RaiseCanExecuteChanged();
+                    RemoveAdsCommand.RaiseCanExecuteChanged();
+                    ShowVideoAdCommand.RaiseCanExecuteChanged();
                 };
             }
         }
@@ -63,7 +65,7 @@ namespace Template10.ViewModels
             try
             {
                 var item = new ViewModels.TodoListViewModel(_todoListRepository.Factory(title: "New List"));
-                this.TodoLists.Insert(0, item);
+                TodoLists.Insert(0, item);
                 SaveCommand.Execute(null);
             }
             catch { }
@@ -76,8 +78,8 @@ namespace Template10.ViewModels
         {
             try
             {
-                var index = this.TodoLists.IndexOf(list);
-                this.TodoLists.Remove(list);
+                var index = TodoLists.IndexOf(list);
+                TodoLists.Remove(list);
                 SaveCommand.Execute(null);
             }
             catch { }
@@ -93,10 +95,10 @@ namespace Template10.ViewModels
                 Busy = true;
                 await Task.Delay(2000);
                 var data = _todoListRepository.Sample(10).Select(x => new ViewModels.TodoListViewModel(x));
-                this.TodoLists.Clear();
+                TodoLists.Clear();
                 foreach (var item in data.OrderBy(x => x.TodoList.Title))
                 {
-                    this.TodoLists.Add(item);
+                    TodoLists.Add(item);
                 }
             }
             finally { Busy = false; }
@@ -115,28 +117,36 @@ namespace Template10.ViewModels
             {
                 Busy = true;
                 await Task.Delay(2000);
-                await _todoListRepository.SaveAsync(this.TodoLists.Select(x => x.TodoList).ToList());
+                await _todoListRepository.SaveAsync(TodoLists.Select(x => x.TodoList).ToList());
             }
             finally { Busy = false; }
         }
 
         Mvvm.Command _RemoveAdsCommand = default(Mvvm.Command);
         public Mvvm.Command RemoveAdsCommand { get { return _RemoveAdsCommand ?? (_RemoveAdsCommand = new Mvvm.Command(ExecuteRemoveAdsCommand, CanExecuteRemoveAdsCommand)); } }
-        private bool CanExecuteRemoveAdsCommand() { return true; }
+        private bool CanExecuteRemoveAdsCommand() { return !Busy && ShowAd; }
         private async void ExecuteRemoveAdsCommand()
         {
             try
             {
                 Busy = true;
-                await Task.Delay(2000);
-                // TODO remove ads with IAP
-                this.ShowAd = false;
-                await new ContentDialog
-                {
-                    Title = "Purchase complete",
-                    Content = "Thank you for your purchase",
-                    PrimaryButtonText = "Close",
-                }.ShowAsync();
+                var iapService = new Services.InAppPurchaseService.InAppPurchaseService();
+                ShowAd = !(await iapService.PurchaseAsync());
+            }
+            finally { Busy = false; }
+        }
+
+        Mvvm.Command _ShowVideoAdCommand = default(Mvvm.Command);
+        public Mvvm.Command ShowVideoAdCommand { get { return _ShowVideoAdCommand ?? (_ShowVideoAdCommand = new Mvvm.Command(ExecuteShowVideoAdCommand, CanExecuteShowVideoAdCommand)); } }
+        private bool CanExecuteShowVideoAdCommand() { return !Busy; }
+        private void ExecuteShowVideoAdCommand()
+        {
+            try
+            {
+                Busy = true;
+                var adService = new Services.AdService.AdService();
+                adService.AfterShown = () => ShowAd = false;
+                adService.Show();
             }
             finally { Busy = false; }
         }

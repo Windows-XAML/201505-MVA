@@ -17,7 +17,7 @@ namespace Template10.Mvvm
             if (!object.Equals(storage, value))
             {
                 storage = value;
-                this.RaisePropertyChanged(propertyName);
+                RaisePropertyChanged(propertyName);
             }
         }
     }

@@ -9,8 +9,8 @@ namespace Template10.Views
     {
         public MainPage()
         {
-            this.InitializeComponent();
-            this.ViewModel = this.DataContext as ViewModels.MainPageViewModel;
+            InitializeComponent();
+            ViewModel = DataContext as ViewModels.MainPageViewModel;
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar= true;
             Window.Current.SetTitleBar(AppTitle);
         }
@@ -19,18 +19,18 @@ namespace Template10.Views
 
         private async void TodoItem_ItemClicked(object sender, ItemClickEventArgs e)
         {
-            this.TodoEditorDialog.DataContext = e.ClickedItem;
-            await this.TodoEditorDialog.ShowAsync();
+            TodoEditorDialog.DataContext = e.ClickedItem;
+            await TodoEditorDialog.ShowAsync();
         }
 
         private async void List_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             var textBlock = sender as TextBlock;
             var data = textBlock.DataContext as ViewModels.TodoListViewModel;
-            this.ListEditorDialog.DataContext = data.TodoList;
-            this.ListEditorDialog.SecondaryButtonCommand = this.ViewModel.RemoveListCommand;
-            this.ListEditorDialog.SecondaryButtonCommandParameter = data;
-            await this.ListEditorDialog.ShowAsync();
+            ListEditorDialog.DataContext = data.TodoList;
+            ListEditorDialog.SecondaryButtonCommand = ViewModel.RemoveListCommand;
+            ListEditorDialog.SecondaryButtonCommandParameter = data;
+            await ListEditorDialog.ShowAsync();
         }
 
         private void TextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)

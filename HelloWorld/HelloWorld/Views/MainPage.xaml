@@ -23,6 +23,7 @@
 
     <Page.BottomAppBar>
         <CommandBar>
+            <AppBarButton Icon="Video" Label="Watch Ad" Command="{Binding ShowVideoAdCommand}" />
             <AppBarButton Icon="Shop" Label="Remove Ads" Command="{Binding RemoveAdsCommand}" />
         </CommandBar>
     </Page.BottomAppBar>

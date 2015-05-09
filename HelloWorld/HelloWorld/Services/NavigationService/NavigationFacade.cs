@@ -44,10 +44,10 @@ namespace Template10.Services.NavigationService
 
         public void Refresh()
         {
-            var page = this.CurrentPageType;
-            var param = this.CurrentPageParam;
-            this._frame.BackStack.Remove(this._frame.BackStack.Last());
-            this.Navigate(page, param);
+            var page = CurrentPageType;
+            var param = CurrentPageParam;
+            _frame.BackStack.Remove(_frame.BackStack.Last());
+            Navigate(page, param);
         }
 
         public bool CanGoForward { get { return _frame.CanGoForward; } }
@@ -103,8 +103,8 @@ namespace Template10.Services.NavigationService
                 };
                 handler(this, args);
             }
-            this.CurrentPageType = e.SourcePageType;
-            this.CurrentPageParam = e.Parameter as String;
+            CurrentPageType = e.SourcePageType;
+            CurrentPageParam = e.Parameter as String;
         }
 
         readonly List<EventHandler> _navigatingEventHandlers = new List<EventHandler>();

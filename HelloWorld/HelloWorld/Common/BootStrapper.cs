@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
 
 namespace Template10.Common
 {
@@ -25,22 +26,24 @@ namespace Template10.Common
 
         public BootStrapper()
         {
-            this.Resuming += (s, e) =>
+            Resuming += (s, e) =>
             {
                 OnResuming(s, e);
             };
-            this.Suspending += async (s, e) =>
+            Suspending += async (s, e) =>
             {
                 var deferral = e.SuspendingOperation.GetDeferral();
-                this.NavigationService.Suspending();
+                NavigationService.Suspending();
                 await OnSuspendingAsync(s, e);
                 deferral.Complete();
             };
+            this.Dispatcher = Window.Current.Dispatcher;
         }
 
         #region properties
 
         public Frame RootFrame { get; set; }
+        public CoreDispatcher Dispatcher { get; set; }
         public Services.NavigationService.NavigationService NavigationService { get; private set; }
         protected Func<SplashScreen, Page> SplashFactory { get; set; }
 
@@ -58,7 +61,7 @@ namespace Template10.Common
 
         private async Task InternalActivatedAsync(IActivatedEventArgs e)
         {
-            await this.OnActivatedAsync(e);
+            await OnActivatedAsync(e);
             Window.Current.Activate();
         }
 
@@ -69,15 +72,15 @@ namespace Template10.Common
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
             UIElement splashScreen = default(UIElement);
-            if (this.SplashFactory != null)
+            if (SplashFactory != null)
             {
-                splashScreen = this.SplashFactory(e.SplashScreen);
+                splashScreen = SplashFactory(e.SplashScreen);
                 Window.Current.Content = splashScreen;
             }
 
-            this.RootFrame = this.RootFrame ?? new Frame();
-            this.RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
-            this.NavigationService = new Services.NavigationService.NavigationService(this.RootFrame);
+            RootFrame = RootFrame ?? new Frame();
+            RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+            NavigationService = new Services.NavigationService.NavigationService(RootFrame);
 
             // the user may override to set custom content
             await OnInitializeAsync();
@@ -85,21 +88,21 @@ namespace Template10.Common
             if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
                 try { /* TODO: restore state */ }
-                finally { await this.OnLaunchedAsync(e); }
+                finally { await OnLaunchedAsync(e); }
             }
             else
             {
-                await this.OnLaunchedAsync(e);
+                await OnLaunchedAsync(e);
             }
 
             // if the user didn't already set custom content use rootframe
             if (Window.Current.Content == splashScreen)
             {
-                Window.Current.Content = this.RootFrame;
+                Window.Current.Content = RootFrame;
             }
             if (Window.Current.Content == null)
             {
-                Window.Current.Content = this.RootFrame;
+                Window.Current.Content = RootFrame;
             }
             Window.Current.Activate();
 
@@ -124,7 +127,7 @@ namespace Template10.Common
 
             if (!e.Handled)
             {
-                if (this.RootFrame.CanGoBack)
+                if (RootFrame.CanGoBack)
                 {
                     RootFrame.GoBack();
                     e.Handled = true;

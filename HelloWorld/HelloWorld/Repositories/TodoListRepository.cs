@@ -26,7 +26,7 @@ namespace Template10.Repositories
 
         public async Task<Models.TodoList> GetAsync(string key)
         {
-            return (await this.GetAsync()).FirstOrDefault(x => x.Key.Equals(key));
+            return (await GetAsync()).FirstOrDefault(x => x.Key.Equals(key));
         }
 
         public async Task SaveAsync(List<Models.TodoList> list)

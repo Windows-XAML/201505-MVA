@@ -105,8 +105,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\TodoItemRepository.cs" />
     <Compile Include="Repositories\TodoListRepository.cs" />
+    <Compile Include="Services\AdService\AdService.cs" />
+    <Compile Include="Services\AdService\AdHelper.cs" />
     <Compile Include="Services\FileService\FileHelper.cs" />
     <Compile Include="Services\FileService\FileService.cs" />
+    <Compile Include="Services\InAppPurchaseService\InAppPurchaseHelper.cs" />
+    <Compile Include="Services\InAppPurchaseService\InAppPurchaseService.cs" />
     <Compile Include="Services\NavigationService\INavigatable.cs" />
     <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationFacade.cs" />
@@ -146,7 +150,14 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0">
+      <Name>Microsoft Advertising SDK for XAML</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs.AppLocal, Version=14.0">
+      <Name>Microsoft Visual C++  AppLocal Runtime Package for Windows UAP</Name>
+    </SDKReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\StarRadioButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -9,7 +9,7 @@ namespace Template10.ViewModels
     {
         public TodoItemViewModel(Models.TodoItem todo)
         {
-            this.TodoItem = todo;
+            TodoItem = todo;
         }
 
         private Models.TodoItem _TodoItem = default(Models.TodoItem);
