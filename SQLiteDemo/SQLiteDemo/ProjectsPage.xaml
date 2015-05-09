@@ -1,0 +1,68 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="SQLiteDemo.ProjectsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SQLiteDemo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ProjectDataTemplate">
+            <Grid Margin="0,0,0,12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Name}" Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" 
+                           Style="{StaticResource BodyTextBlockStyle}" Foreground="#FF1268B2" FontSize="18"/>
+                <TextBlock Text="{Binding Description}" Grid.Row="1" VerticalAlignment="Center" 
+                           Style="{StaticResource BodyTextBlockStyle}"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Top">
+                    <TextBlock Text="Due Date" Margin="0,0,10,0"
+                               Style="{StaticResource CaptionTextBlockStyle}"/>
+                    <TextBlock Text="{Binding DueDate, Converter={StaticResource DateTimeToStringConverter}}" 
+                               Style="{StaticResource BodyTextBlockStyle}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Margin="8,36,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        VerticalAlignment="Top"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+            <TextBlock x:Name="pageTitle" Text="customer_name" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="12,0,20,20"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Vertical" Margin="20,10,0,20" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                <TextBlock Text="Projects" Margin="0,0,0,10" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                <ListView x:Name="ProjectsList" ItemTemplate="{StaticResource ProjectDataTemplate}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</Page>

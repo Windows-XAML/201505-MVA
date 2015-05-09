@@ -88,10 +88,18 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.Header>
-
-                            <!-- create new item -->
-                            <TextBox KeyDown="TextBox_KeyDown" PlaceholderText="Add a new task" Margin="24,0,24,12" />
-
+                            <StackPanel Orientation="Horizontal">
+                                <!-- create new item -->
+                                <TextBox KeyDown="TextBox_KeyDown" Width="260" PlaceholderText="Add a new task" 
+                                         Margin="24,0,0,12" />
+                                <AppBarButton Icon="Accept" Loaded="AddNewItemConfirmButton_Loaded"
+                                              IsEnabled="False" Click="AddNewItemConfirmButton_Click" 
+                                              RenderTransformOrigin="0.5,0.5" Margin="0,-8,0,0">
+                                    <AppBarButton.RenderTransform>
+                                        <CompositeTransform ScaleX="0.75" ScaleY="0.75"/>
+                                    </AppBarButton.RenderTransform>
+                                </AppBarButton>
+                            </StackPanel> 
                         </ListView.Header>
                         <ListView.ItemTemplate>
                             <DataTemplate>

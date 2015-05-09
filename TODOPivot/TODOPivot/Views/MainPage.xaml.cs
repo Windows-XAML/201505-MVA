@@ -42,18 +42,61 @@ namespace TODOPivot.Views
             await this.ListEditorDialog.ShowAsync();
         }
 
+        private TextBox NewToDoItemNameTextBox = null;
+
+        private AppBarButton AddNewItemConfirmButton = null;
+
+        private void AddNewItemConfirmButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            // This button is in a data template, so we can use the Loaded event to get a reference to it
+            // You can't get at controls in Data Templates in Item Templates using their name
+            AddNewItemConfirmButton = sender as AppBarButton;
+        }
+
         private void TextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             var textBox = sender as TextBox;
-            if (e.Key == Windows.System.VirtualKey.Enter
-                && !string.IsNullOrEmpty(textBox.Text)
+            NewToDoItemNameTextBox = textBox;
+
+            if (!string.IsNullOrEmpty(textBox.Text)
                 && textBox.Text.Length > 3)
             {
-                e.Handled = true;
-                var list = textBox.DataContext as ViewModels.TodoListViewModel;
-                list.AddCommand.Execute(textBox.Text);
-                textBox.Text = string.Empty;
-                textBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+                if (AddNewItemConfirmButton != null)
+                    AddNewItemConfirmButton.IsEnabled = true;
+
+                if (e.Key == Windows.System.VirtualKey.Enter)
+                {
+                    // Handle 'Enter' key for keyboard users
+                    if (e.Key == Windows.System.VirtualKey.Enter)
+                    {
+                        e.Handled = true;
+                        CreateNewToDoItem(textBox);
+                    }
+                }
+            }
+            else
+            {
+                if (AddNewItemConfirmButton != null)
+                    AddNewItemConfirmButton.IsEnabled = false;
+            }
+        }
+
+        private void CreateNewToDoItem(TextBox textBox)
+        {
+            var list = textBox.DataContext as ViewModels.TodoListViewModel;
+            list.AddCommand.Execute(textBox.Text);
+            textBox.Text = string.Empty;
+            textBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+
+            if (AddNewItemConfirmButton != null)
+                AddNewItemConfirmButton.IsEnabled = false;
+        }
+
+        private void AddNewItemConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewToDoItemNameTextBox != null)
+            {
+                CreateNewToDoItem(NewToDoItemNameTextBox);
             }
         }
 
