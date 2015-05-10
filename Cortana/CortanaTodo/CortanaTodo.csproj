@@ -170,12 +170,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\Users\jbienz\Code\Microsoft\201505-MVA\Cortana\packages\Newtonsoft.Json.6.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CortanaTodo.Background\CortanaTodo.Background.csproj">
       <Project>{987337ee-669c-4856-b425-68f1d0d3b9c6}</Project>
       <Name>CortanaTodo.Background</Name>
