@@ -27,8 +27,12 @@ namespace LaunchTargetDemoApp
         {
             this.InitializeComponent();
 
+            var pfn = Windows.ApplicationModel.Package.Current.Id.FamilyName;
+
             this.Loaded += async (s, a) =>
-                await new MessageDialog("PFN for this app: " + Windows.ApplicationModel.Package.Current.Id.FamilyName).ShowAsync();
+                await new MessageDialog("PFN for this app: " + pfn).ShowAsync();
+
+            System.Diagnostics.Debug.WriteLine("PFN: " + pfn);
         }
     }
 }
