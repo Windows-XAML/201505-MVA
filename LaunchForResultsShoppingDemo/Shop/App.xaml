@@ -1,0 +1,11 @@
+﻿<Application
+    x:Class="Shop.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"   
+    xmlns:local="using:Shop"
+    xmlns:vm="using:Shop.ViewModels">
+
+    <Application.Resources>
+        <vm:ViewModelLocator x:Key="locator" />
+    </Application.Resources>
+</Application>
