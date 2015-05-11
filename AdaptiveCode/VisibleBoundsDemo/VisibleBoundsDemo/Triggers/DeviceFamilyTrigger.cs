@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 
 namespace VisibleBoundsDemo.Triggers
 {
@@ -11,8 +6,8 @@ namespace VisibleBoundsDemo.Triggers
     {
         //private variables
         private string _deviceFamily;
+ 
         //Public property
-
         public string DeviceFamily
         {
             get
@@ -30,5 +25,4 @@ namespace VisibleBoundsDemo.Triggers
             }
         }
     }
-
 }
