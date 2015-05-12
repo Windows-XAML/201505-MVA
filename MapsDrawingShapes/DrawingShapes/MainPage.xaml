@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="DrawingShapes.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DrawingShapes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Windows.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps">
+
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Margin="12,0,12,0" >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid  Margin="0,18,0,5">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock TextWrapping="Wrap" Text="Map shapes" FontSize="26.667"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+          <AppBarButton Label="Lines" Icon="Italic" Click="DrawLines" />
+          <AppBarButton Label="Polygons" Icon="BrowsePhotos" Click="DrawShapes"/>
+          <AppBarButton Label="Points" Icon="MapPin" Click="DrawPoints" />
+          <AppBarButton Label="Delete all" Icon="Delete" Click="DeleteAll" />
+          <AppBarSeparator/>
+          <AppBarButton  Label="zoom out" Icon="ZoomOut" Click="ZoomOut"/>
+          <AppBarButton  Label="zoom in" Icon="ZoomIn" Click="ZoomIn"/>
+        </StackPanel>
+      </Grid>
+      <Maps:MapControl Grid.Row="1" x:Name="MyMap" MapTapped="MyMap_MapTapped" />
+      <!--MapServiceToken="Credentials=&quot;AiFTXnMoalZ-eN9AjO34J_3ZIv0r1rFsnEKOn8TUBD6QvCyoVm7FVGkdNZzM7bVu&quot;" />-->
+    </Grid>
+  </Grid>
+</Page>

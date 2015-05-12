@@ -22,10 +22,10 @@
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <triggers:DeviceFamilyTrigger DeviceFamily="Mobile" />
+                        <triggers:DeviceFamilyTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="StatusBarControls.Visibility" Value="Visible"/>
+                        <Setter Target="StatusBarControls.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

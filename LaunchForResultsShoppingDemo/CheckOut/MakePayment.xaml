@@ -1,0 +1,67 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="CheckOut.MakePayment"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CheckOut"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    RequestedTheme="Dark">
+
+    <Grid Background="BlueViolet">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Source="/Assets/checkout.png" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Top" Height="150" Margin="-24" />
+
+        <StackPanel Margin="20">
+            <TextBlock Text="Check Out:" Style="{StaticResource TitleTextBlockStyle}" FontWeight="Black" />
+            <TextBlock Text="Your Order" Style="{StaticResource TitleTextBlockStyle}" FontWeight="Black" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="20,0">
+            <TextBlock Text="Items" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <ItemsControl x:Name="ItemsInOrder">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MaxWidth="50" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Quantity}" Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" />
+                            <TextBlock Text="{Binding Description}" Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}" />
+                            <TextBlock Text="{Binding UnitPrice}" Grid.Column="2" Style="{StaticResource BodyTextBlockStyle}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Total:" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,20,0" />
+                <TextBlock x:Name="TotalAmount" Text="X.XX" Style="{StaticResource TitleTextBlockStyle}" />
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="20,0">
+            <TextBlock Text="Payment Options" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <RadioButton Content="Pay with card ending 1234" x:Name="CardEnding1234" IsChecked="True" />
+            <RadioButton Content="Pay with card ending 9876" x:Name="CardEnding9876" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" >
+            <Button Margin="20" Content="Cancel" Click="CancelClicked" />
+            <Button Margin="20" Content="Make Payment" Click="MakePaymentClicked" />
+        </StackPanel>
+    </Grid>
+</Page>
