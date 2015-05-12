@@ -1,0 +1,199 @@
+﻿<Page
+    x:Class="Blank1.Views.MainPage"
+    xmlns:local="using:Blank1.Views"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Blank1.ViewModels"
+    xmlns:t="using:Blank1.Triggers"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="OrientationTriggerVisualStateGroup">
+                <VisualState x:Name="VisualStateLandscape">
+                    <VisualState.StateTriggers>
+                        <t:OrientationTrigger Orientation="Landscape" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="VisualStatePortrait">
+                    <VisualState.StateTriggers>
+                        <t:OrientationTrigger Orientation="Portrait" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock1">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="DeviceFamilyVisualStateGroup">
+                <VisualState x:Name="VisualStateDesktop">
+                    <VisualState.StateTriggers>
+                        <t:DeviceFamilyTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock2">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="VisualStateMobile">
+                    <VisualState.StateTriggers>
+                        <t:DeviceFamilyTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock3">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="InputTypeVisualStateGroup1">
+                <VisualState x:Name="VisualStateMouse">
+                    <VisualState.StateTriggers>
+                        <t:InputTypeTrigger PointerType="Mouse" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlockMouse">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="InputTypeVisualStateGroup2">
+                <VisualState x:Name="VisualStatePen">
+                    <VisualState.StateTriggers>
+                        <t:InputTypeTrigger PointerType="Pen" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlockPen">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="InputTypeVisualStateGroup3">
+                <VisualState x:Name="VisualStateTouch">
+                    <VisualState.StateTriggers>
+                        <t:InputTypeTrigger PointerType="Touch" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlockTouch">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="NetworkAvailabilityVisualStateGroup">
+                <VisualState x:Name="VisualStateAvailable">
+                    <VisualState.StateTriggers>
+                        <t:NetworkAvailableStateTrigger ConnectionState="Connected" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock7">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="VisualStateUnavailable">
+                    <VisualState.StateTriggers>
+                        <t:NetworkAvailableStateTrigger ConnectionState="Disconnected" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock8">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <ScrollViewer HorizontalScrollMode="Auto">
+            <StackPanel Orientation="Horizontal">
+
+                <StackPanel.Resources>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <Setter Property="Margin" Value="12,12" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <StackPanel>
+                    <TextBlock FontWeight="Black">Orientation trigger</TextBlock>
+                    <TextBlock x:Name="textBlock1">Landscape</TextBlock>
+                    <TextBlock x:Name="textBlock">Portrait</TextBlock>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock FontWeight="Black">Device family</TextBlock>
+                    <TextBlock x:Name="textBlock3">Desktop</TextBlock>
+                    <TextBlock x:Name="textBlock2">Mobile</TextBlock>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock FontWeight="Black" x:Name="textBlockInputType">Input type</TextBlock>
+                    <TextBlock Visibility="Collapsed" x:Name="textBlockMouse">Mouse</TextBlock>
+                    <TextBlock Visibility="Collapsed" x:Name="textBlockTouch">Touch</TextBlock>
+                    <TextBlock Visibility="Collapsed" x:Name="textBlockPen">Pen</TextBlock>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock FontWeight="Black">Network status</TextBlock>
+                    <TextBlock x:Name="textBlock8">Connected</TextBlock>
+                    <TextBlock x:Name="textBlock7">Disconnected</TextBlock>
+                </StackPanel>
+
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Page>
