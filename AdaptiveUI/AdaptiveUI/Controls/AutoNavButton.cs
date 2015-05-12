@@ -80,6 +80,8 @@ namespace Template10.Controls
         #region Internal Methods
         private void CalculateState()
         {
+            return;
+
             // Switch the visual state to match the mode
             VisualStateManager.GoToState(this, Mode.ToString(), true);
 

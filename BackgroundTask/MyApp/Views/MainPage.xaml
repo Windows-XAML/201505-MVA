@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="MyApp.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="Height" Value="38" />
+                <Setter Property="Width" Value="96" />
+            </Style>
+            <Style TargetType="RelativePanel">
+                <Setter Property="Margin" Value="12,0" />
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="SteelBlue" Opacity=".1" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="12,12,0,0">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE76E;" FontSize="40" VerticalAlignment="Center" Margin="0,0,20,0" />
+            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="Hello Template 10" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="0,80,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
+            <RelativePanel>
+                <Button x:Name="registerButton" Content="Register" Click="registerButton_Click"/>
+                <Button x:Name="unregisterButton" RelativePanel.Below="registerButton" Content="Unregister" Click="unregisterButton_Click"/>
+                <Button x:Name="invokeButton" RelativePanel.Below="unregisterButton" Content="Invoke" Click="invokeButton_Click"/>
+                <CheckBox x:Name="stopCheckBox" RelativePanel.RightOf="unregisterButton" RelativePanel.AlignVerticalCenterWith="unregisterButton" IsChecked="True" Content="Stop on unregister" FontWeight="Light" />
+                <TextBlock x:Name="textBlock" RelativePanel.RightOf="registerButton" RelativePanel.AlignVerticalCenterWith="registerButton" TextWrapping="Wrap">
+            	    <Run Text="Progress:"/>
+            	    <LineBreak/>
+            	    <Run x:Name="ProgressText" FontWeight="Light" Text="No information"/>
+                </TextBlock>
+                <TextBox x:Name="targetTextBox" Text="10" Width="100" MaxLength="2" RelativePanel.RightOf="invokeButton" RelativePanel.AlignVerticalCenterWith="invokeButton" />
+            </RelativePanel>
+            <RelativePanel>
+                <TextBlock Text="Time Zone" x:Name="TimeZoneTextBlock" />
+                <Button x:Name="register2Button" RelativePanel.Below="TimeZoneTextBlock" Content="Register" Click="register2Button_Click"/>
+                <Button x:Name="settings2Button" RelativePanel.Below="register2Button" Content="Settings" Click="settings2Button_Click"/>
+                <TextBlock RelativePanel.RightOf="register2Button" RelativePanel.AlignVerticalCenterWith="register2Button" TextWrapping="Wrap">
+            	    <Run Text="Status:"/>
+            	    <LineBreak/>
+            	    <Run x:Name="Progress2Text" FontWeight="Light" Text="No information"/>
+                </TextBlock>
+            </RelativePanel>
+        </StackPanel>
+
+    </Grid>
+</Page>

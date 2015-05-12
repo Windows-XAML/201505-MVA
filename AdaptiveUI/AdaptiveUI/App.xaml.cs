@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.ApplicationInsights;
 using AdaptiveUI.Views;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
@@ -29,7 +28,6 @@ namespace AdaptiveUI
         /// <summary>
         /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
         /// </summary>
-        public TelemetryClient TelemetryClient = new TelemetryClient();
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

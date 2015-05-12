@@ -16,9 +16,9 @@
                     <VisualState.Setters>
                         <Setter Target="ScanButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
-                    <VisualState.StateTriggers>
+                    <!--<VisualState.StateTriggers>
                         <trig:ApiInformationTrigger ContractName="Windows.Devices.Scanners.ScannerDeviceContract" ContractMajorVersion="1" />
-                    </VisualState.StateTriggers>
+                    </VisualState.StateTriggers>-->
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup x:Name="SettingsGroup">
@@ -26,9 +26,9 @@
                     <VisualState.Setters>
                         <Setter Target="SettingsButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
-                    <VisualState.StateTriggers>
+                    <!--<VisualState.StateTriggers>
                         <trig:ApiInformationTrigger TypeName="Windows.UI.ApplicationSettings.SettingsPane" />
-                    </VisualState.StateTriggers>
+                    </VisualState.StateTriggers>-->
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
