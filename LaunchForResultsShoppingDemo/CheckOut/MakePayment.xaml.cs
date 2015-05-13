@@ -98,7 +98,7 @@ namespace CheckOut
             result["Total"] = this.totalAmount;
 
             // We're just using a couple of harcdoded payment options in this demo.
-            // Obviously, if using actual ones from another source then getting the last 4 digits woudl need to be done differently.
+            // Obviously, if using actual ones from another source then getting the last 4 digits would need to be done differently.
             var cardEnding = "";
 
             if (this.CardEnding1234.IsChecked ?? false)
