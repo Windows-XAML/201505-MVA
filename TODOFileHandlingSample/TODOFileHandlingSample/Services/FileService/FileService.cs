@@ -12,7 +12,6 @@ namespace TODOFileHandlingSample.Services.FileService
 
         public async Task<List<T>> ReadAsync<T>(string key)
         {
-            try { return await _helper.ReadFileAsync<List<T>>(key, FileHelper.StorageStrategies.Roaming); }
             try { return await _helper.ReadFileAsync<List<T>>(key, FileHelper.StorageStrategies.Local); }
             catch { return new List<T>(); }
         }
