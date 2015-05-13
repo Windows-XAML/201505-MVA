@@ -14,7 +14,7 @@ namespace Blank10
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            NavigationService.Navigate(typeof(Views.MainPage));
+            NavigationService.Navigate(typeof(Views.AltPage));
             return Task.FromResult<object>(null);
         }
     }
