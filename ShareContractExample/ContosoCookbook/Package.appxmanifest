@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+  <Identity Name="b573322f-6aa1-4398-8770-489ba9ccc46a" Publisher="CN=Andy" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="b573322f-6aa1-4398-8770-489ba9ccc46a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>ContosoCookbook</DisplayName>
+    <PublisherDisplayName>Andy</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="ContosoCookbook.App">
+      <uap:VisualElements DisplayName="ContosoCookbook" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ContosoCookbook"  BackgroundColor="#464646">
+        <uap:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:ApplicationView MinWidth="width320" />
+        <!--Used in XAML Designer. DO NOT REMOVE-->
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClientServer" />
+    <uap:Capability Name="picturesLibrary" />
+    <DeviceCapability Name="webcam" />
+  </Capabilities>
+</Package>

@@ -1,0 +1,67 @@
+﻿<Page
+    x:Class="ContosoCookbook.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ContosoCookbook"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:ContosoCookbook.DataModel"
+    xmlns:animation="using:Windows.UI.Xaml.Media.Animation"
+    mc:Ignorable="d"
+    RequestedTheme="Light"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    d:DataContext="{d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}">
+
+    <Page.Resources>
+        <DataTemplate x:Key="RecipeGroupDataTemplate">
+            <Grid Margin="20, 0, 0, 10" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Image Source="{Binding Image}" Stretch="UniformToFill" Grid.RowSpan="2"/>
+                <TextBlock Text="{Binding Title}"  Grid.Column="1" Grid.Row="0" 
+				           Style="{StaticResource HeaderTextBlockStyle}" FontSize="24" Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding Description}" Grid.Column="1" Grid.Row="1" 
+				           Style="{StaticResource BodyTextBlockStyle}" TextWrapping="NoWrap" 
+                           TextTrimming="CharacterEllipsis"  Margin="10,0,0,0"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="AboutButton" Label="about" Click="About_Click"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid x:Name="LayoutRoot" 
+          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- TitlePanel -->
+        <StackPanel Grid.Row="0" Margin="20,17,0,28">
+            <TextBlock x:Uid="AppName" Text="CONTOSO COOKBOOK" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>
+            <TextBlock x:Uid="RegionsPageHeader" Text="regions" Margin="0,12,0,0" Style="{ThemeResource HeaderTextBlockStyle}"/>
+        </StackPanel>
+
+        <!--TODO: Content should be placed within the following grid 
+                  to show details for the current item -->
+        <Grid Grid.Row="1" x:Name="ContentRoot">
+            <ListView x:Name="groupListView" 
+                      ItemsSource="{Binding AllGroups}"
+                      SelectionChanged="lstGroups_SelectionChanged" 
+                      ItemTemplate="{StaticResource RecipeGroupDataTemplate}"/>
+        </Grid>
+    </Grid>
+</Page>
