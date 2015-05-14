@@ -91,7 +91,6 @@ namespace TODOFileHandlingSample.ViewModels
                 await Task.Delay(1000);
 
                 var data = await _todoListRepository.GetAsync();
-                //var data = _todoListRepository.Sample(2).Select(x => new ViewModels.TodoListViewModel(x));
                 this.TodoLists.Clear();
                 foreach (var item in data.OrderBy(x => x.Title))
                 {

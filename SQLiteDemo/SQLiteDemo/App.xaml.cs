@@ -56,7 +56,7 @@ namespace SQLiteDemo
             conn = new SQLiteConnection("sqlitepcldemo.db");
             CreateDatabase.LoadDatabase(conn);
 
-#if DEBUG
+#if DEBUGEFR
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
