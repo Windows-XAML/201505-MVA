@@ -15,9 +15,6 @@
                 <ResourceDictionary Source="../Styles/SplitViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Style TargetType="TextBlock" BasedOn="{StaticResource SplitViewTextBlockStyle}" />
-            <Style TargetType="RadioButton" BasedOn="{StaticResource SplitViewRadioButtonStyle}" />
-
         </ResourceDictionary>
 
     </Page.Resources>
@@ -36,16 +33,20 @@
                     <StackPanel>
 
                         <!-- back -->
-                        <RadioButton Checked="DontCheck" Command="{Binding BackCommand}"  Background="{StaticResource SystemControlBackgroundAccentBrush}">
+                        <RadioButton Style="{StaticResource SplitViewRadioButtonStyle}" 
+                                     Checked="DontCheck" Command="{Binding BackCommand}"  Background="{StaticResource SystemControlBackgroundAccentBrush}">
                             <RadioButton.Tag>
-                                <TextBlock Text="{StaticResource BackButtonText}" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
+                                <TextBlock Style="{StaticResource SplitViewTextBlockStyle}"
+                                           Text="{StaticResource BackButtonText}" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
                             </RadioButton.Tag>
                         </RadioButton>
 
                         <!-- hamburger -->
-                        <RadioButton Checked="DontCheck" Command="{Binding MenuCommand}">
+                        <RadioButton Style="{StaticResource SplitViewRadioButtonStyle}" 
+                                     Checked="DontCheck" Command="{Binding MenuCommand}">
                             <RadioButton.Tag>
-                                <TextBlock Text="{StaticResource MenuButtonText}" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
+                                <TextBlock Style="{StaticResource SplitViewTextBlockStyle}"
+                                           Text="{StaticResource MenuButtonText}" FontSize="{StaticResource SplitViewLargeNavFontSize}" />
                             </RadioButton.Tag>
                         </RadioButton>
 
@@ -55,32 +56,38 @@
                 <StackPanel x:Name="RadioButtonContainer" Grid.Row="1">
 
                     <!-- home -->
-                    <RadioButton Command="{Binding NavCommand}" Content="Home" GroupName="Nav">
+                    <RadioButton Style="{StaticResource SplitViewRadioButtonStyle}" 
+                                 Command="{Binding NavCommand}" Content="Home" GroupName="Nav">
                         <RadioButton.CommandParameter>
                             <views:NavType Type="views:MainPage" />
                         </RadioButton.CommandParameter>
                         <RadioButton.Tag>
-                            <TextBlock Text="" />
+                            <TextBlock Style="{StaticResource SplitViewTextBlockStyle}"
+                                       Text="" />
                         </RadioButton.Tag>
                     </RadioButton>
 
                     <!-- privacy -->
-                    <RadioButton Command="{Binding NavCommand}" Content="Privacy" GroupName="Nav">
+                    <RadioButton Style="{StaticResource SplitViewRadioButtonStyle}" 
+                                 Command="{Binding NavCommand}" Content="Privacy" GroupName="Nav">
                         <RadioButton.CommandParameter>
                             <views:NavType Type="views:PrivacyPage" />
                         </RadioButton.CommandParameter>
                         <RadioButton.Tag>
-                            <TextBlock Text="" />
+                            <TextBlock Style="{StaticResource SplitViewTextBlockStyle}"
+                                       Text="" />
                         </RadioButton.Tag>
                     </RadioButton>
 
                     <!-- about -->
-                    <RadioButton Command="{Binding NavCommand}" Content="About" GroupName="Nav">
+                    <RadioButton Style="{StaticResource SplitViewRadioButtonStyle}" 
+                                 Command="{Binding NavCommand}" Content="About" GroupName="Nav">
                         <RadioButton.CommandParameter>
                             <views:NavType Type="views:AboutPage" />
                         </RadioButton.CommandParameter>
                         <RadioButton.Tag>
-                            <TextBlock Text="" />
+                            <TextBlock Style="{StaticResource SplitViewTextBlockStyle}"
+                                       Text="" />
                         </RadioButton.Tag>
                     </RadioButton>
 
@@ -89,12 +96,14 @@
                 <StackPanel Grid.Row="2">
 
                     <!-- settings -->
-                    <RadioButton Command="{Binding NavCommand}" Content="Settings" GroupName="Nav">
+                    <RadioButton Style="{StaticResource SplitViewRadioButtonStyle}" 
+                                 Command="{Binding NavCommand}" Content="Settings" GroupName="Nav">
                         <RadioButton.CommandParameter>
                             <views:NavType Type="views:SettingsPage" />
                         </RadioButton.CommandParameter>
                         <RadioButton.Tag>
-                            <TextBlock Text="" />
+                            <TextBlock Style="{StaticResource SplitViewTextBlockStyle}"
+                                       Text="" />
                         </RadioButton.Tag>
                     </RadioButton>
 

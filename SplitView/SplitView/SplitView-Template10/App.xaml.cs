@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Template10.Common;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
@@ -19,7 +20,7 @@ namespace Template10
             return base.OnInitializeAsync();
         }
 
-        public override Task OnLaunchedAsync(ILaunchActivatedEventArgs e)
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             this.NavigationService.Navigate(typeof(Views.MainPage));
             return Task.FromResult<object>(null);
