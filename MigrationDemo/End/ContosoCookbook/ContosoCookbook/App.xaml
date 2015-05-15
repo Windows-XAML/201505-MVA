@@ -8,5 +8,7 @@
     <Application.Resources>
         <converters:UserImagesDisplayConverter x:Key="ImagesDisplayConverter"/>
         <converters:ImageSourceToStringConverter x:Key="ToStringConverter"/>
+        
+        <SolidColorBrush x:Key="AccentBrush" Color="{ThemeResource SystemAccentColor}"/>
     </Application.Resources>
 </Application>

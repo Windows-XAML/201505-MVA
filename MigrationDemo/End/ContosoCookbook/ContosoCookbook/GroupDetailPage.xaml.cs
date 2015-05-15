@@ -107,5 +107,12 @@ namespace ContosoCookbook
             }
         }
 
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+            }
+        }
     }
 }
