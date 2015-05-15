@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SynonymsServiceClientLibrary;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,13 +25,13 @@ namespace AppServicesClientApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        AppServiceConnection connection = null;
-        AppServiceConnection synonymsServiceConnection = null;
-
         public MainPage()
         {
             this.InitializeComponent();
         }
+
+        #region Call Calculator App Service
+        AppServiceConnection connection = null;
 
         private async void CallAppService()
         {
@@ -47,7 +48,11 @@ namespace AppServicesClientApp
             if (response.Status == AppServiceResponseStatus.Success)
             {
                 int sum = (int)response.Message["Result"];
-                new MessageDialog("Result=" + sum).ShowAsync();
+                var cd = new ContentDialog();
+                cd.Title = "Result=" + sum;
+                cd.PrimaryButtonText = "OK";
+                cd.PrimaryButtonClick += (s, a) => cd.Hide();
+                cd.ShowAsync();
             }
         }
 
@@ -106,14 +111,90 @@ namespace AppServicesClientApp
             this.connection.Dispose();
             this.connection = null;
         }
+        #endregion
 
-        SynonymsServiceClientLibrary.SynonymsServiceClient synonymsClient = new SynonymsServiceClientLibrary.SynonymsServiceClient();
+
+        //#region Call Synonyms Service Directly
+
+        //AppServiceConnection synonymsServiceConnection = null;
+
+        //private async void GetSynonymsButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (this.synonymsServiceConnection == null)
+        //    {
+        //        synonymsServiceConnection = new AppServiceConnection();
+
+        //        // See the appx manifest of the AppServicesDemp app for this value
+        //        synonymsServiceConnection.AppServiceName = "MicrosoftDX-SynonymsService";
+        //        // Use the Windows.ApplicationModel.Package.Current.Id.FamilyName API in the 
+        //        // provider app to get this value
+        //        synonymsServiceConnection.PackageFamilyName = "82a987d5-4e4f-4cb4-bb4d-700ede1534ba_nsf9e2fmhb1sj";
+
+        //        AppServiceConnectionStatus connectionStatus = await synonymsServiceConnection.OpenAsync();
+        //        if (connectionStatus == AppServiceConnectionStatus.Success)
+        //        {
+        //            synonymsServiceConnection.ServiceClosed += OnServiceClosed;
+        //        }
+        //        else
+        //        {
+        //            //Drive the user to store to install the app that provides 
+        //            //the app service 
+        //        }
+        //    }
+
+        //    //Send data to the service 
+        //    var message = new ValueSet();
+        //    message.Add("Command", "GetSynonym");
+        //    message.Add("Term", Term.Text);
+
+        //    //Send a message  
+        //    AppServiceResponse response = await synonymsServiceConnection.SendMessageAsync(message);
+
+        //    List<string> synonyms = null;
+        //    if (response.Status == AppServiceResponseStatus.Success)
+        //    {
+        //        if (response.Message.ContainsKey("Result"))
+        //        {
+        //            synonyms = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>((string)response.Message["Result"]);
+        //        }
+        //        else if (response.Message.ContainsKey("Error"))
+        //        {
+        //            throw new Exception("Error:" + response.Message["Error"]);
+        //        }
+        //    }
+
+        //    // Display outcome
+        //    await DisplaySynonymsResponse(
+        //        new SynonymsServiceResponse()
+        //        {
+        //            Status = response.Status,
+        //            Synonyms = synonyms,
+        //        });
+        //}
+
+        //#endregion
+
+        #region Call Synonyms Service using Client API
+
+        SynonymsServiceClientLibrary.SynonymsServiceClient synonymsClient =
+            new SynonymsServiceClientLibrary.SynonymsServiceClient();
 
         private async void GetSynonymsButton_Click(object sender, RoutedEventArgs e)
         {
-            SynonymsServiceClientLibrary.SynonymsServiceResponse synonymsResponse = 
+            SynonymsServiceClientLibrary.SynonymsServiceResponse synonymsResponse =
                 await synonymsClient.GetSynonymsAsync(Term.Text);
 
+            await DisplaySynonymsResponse(synonymsResponse);
+        }
+
+        #endregion
+
+
+
+
+
+        private async System.Threading.Tasks.Task DisplaySynonymsResponse(SynonymsServiceClientLibrary.SynonymsServiceResponse synonymsResponse)
+        {
             string synonymsOutput = "";
             if (synonymsResponse.Status == AppServiceResponseStatus.Success)
             {
@@ -121,62 +202,17 @@ namespace AppServicesClientApp
                 {
                     synonymsOutput += "|" + item;
                 }
-                await new MessageDialog("Synonyms=" + synonymsOutput).ShowAsync();
+
+                var cd = new ContentDialog();
+                cd.Title = "Synonyms=" + synonymsOutput;
+                cd.PrimaryButtonText = "OK";
+                cd.PrimaryButtonClick += (s, a) => cd.Hide();
+                await cd.ShowAsync();
             }
             else
             {
                 await new MessageDialog("Synonyms API call failed").ShowAsync();
             }
         }
-
-        //private async void GetSynonymsButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //  await EnsureConnectionToSynonymsService();
-
-        //  //Send data to the service 
-        //  var message = new ValueSet();
-        //  message.Add("Command", "GetSynonym");
-        //  message.Add("Term", Term.Text);
-
-        //  //Send a message  
-        //  AppServiceResponse response = await synonymsServiceConnection.SendMessageAsync(message);
-        //  if (response.Status == AppServiceResponseStatus.Success)
-        //  {
-        //    if (response.Message.ContainsKey("Result"))
-        //    {
-        //      new MessageDialog("Synonyms=" + response.Message["Result"]).ShowAsync();
-        //    }
-        //    else if (response.Message.ContainsKey("Error"))
-        //    {
-        //      new MessageDialog("Error:" + response.Message["Error"]).ShowAsync();
-        //    }
-        //  }
-        //}
-
-        //private async System.Threading.Tasks.Task EnsureConnectionToSynonymsService()
-        //{
-        //  if (this.synonymsServiceConnection == null)
-        //  {
-        //    synonymsServiceConnection = new AppServiceConnection();
-
-        //    // See the appx manifest of the AppServicesDemp app for this value
-        //    synonymsServiceConnection.AppServiceName = "MicrosoftDX-SynonymsService";
-        //    // Use the Windows.ApplicationModel.Package.Current.Id.FamilyName API in the 
-        //    // provider app to get this value
-        //    synonymsServiceConnection.PackageFamilyName = "82a987d5-4e4f-4cb4-bb4d-700ede1534ba_nsf9e2fmhb1sj";
-
-        //    AppServiceConnectionStatus connectionStatus = await synonymsServiceConnection.OpenAsync();
-        //    if (connectionStatus == AppServiceConnectionStatus.Success)
-        //    {
-        //      synonymsServiceConnection.ServiceClosed += OnServiceClosed;
-        //      //connection.RequestReceived += OnRequestReceived;
-        //    }
-        //    else
-        //    {
-        //      //Drive the user to store to install the app that provides 
-        //      //the app service 
-        //    }
-        //  }
-        //}
     }
 }

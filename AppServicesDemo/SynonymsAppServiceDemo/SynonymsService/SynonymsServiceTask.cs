@@ -29,7 +29,6 @@ namespace SynonymsService
       if (appService != null &&
           appService.Name == "MicrosoftDX-SynonymsService")
       {
-        //ValidateCaller(appService.CallerPackageFamilyName);
         appService.AppServiceConnection.RequestReceived += AppServiceConnection_RequestReceived;
       }
     }
@@ -61,7 +60,7 @@ namespace SynonymsService
               {
                 //Set a result to return to the caller
                 //Serialize the IEnumerable<string> to Json so we can insert into ValueSet
-                returnMessage.Add("Result", Newtonsoft.Json.JsonConvert.SerializeObject(synonyms));
+                returnMessage.Add("Result", JSONHelper.SerializeObject(synonyms));
               }
               else
               {

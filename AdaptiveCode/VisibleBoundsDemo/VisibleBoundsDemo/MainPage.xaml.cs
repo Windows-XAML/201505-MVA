@@ -37,6 +37,12 @@ namespace VisibleBoundsDemo
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ReportVisibleBounds();
+
+
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var i = Windows.UI.ViewManagement.StatusBar.GetForCurrentView().ShowAsync();
+            }
         }
 
         private void ReportVisibleBounds()
@@ -84,7 +90,7 @@ namespace VisibleBoundsDemo
             // StatusBar is Mobile only
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                var ignore = Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
+                var i = Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
             }
         }
 
@@ -93,7 +99,7 @@ namespace VisibleBoundsDemo
             // StatusBar is Mobile only
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                var ignore = Windows.UI.ViewManagement.StatusBar.GetForCurrentView().ShowAsync();
+                var i = Windows.UI.ViewManagement.StatusBar.GetForCurrentView().ShowAsync();
             }
         }
 

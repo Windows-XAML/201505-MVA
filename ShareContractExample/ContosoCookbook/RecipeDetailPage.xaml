@@ -1,0 +1,91 @@
+﻿<Page
+    x:Class="ContosoCookbook.RecipeDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ContosoCookbook"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:ContosoCookbook.DataModel"
+    RequestedTheme="Light"
+    mc:Ignorable="d"
+    d:DataContext="{Binding AllGroups[1].Items[1], Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Name="btnPinToStart" Icon="Pin" Click="btnPinToStart_Click" Label="Like"/>
+            <AppBarButton x:Name="btnReminderTimer" Icon="Clock" Label="timer" Click="btnReminderTimer_Click"/>
+            <AppBarButton x:Name="btnTakePhoto" Icon="Camera" Label="nailed it!" Click="btnPhoto_Click"/>
+            <AppBarButton x:Name="btnShare" Icon="ReShare" Label="share" Click="btnShare_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          DataContext="{Binding Item}" d:DataContext="{Binding}">
+        <Pivot x:Uid="Pivot" Title="CONTOSO COOKBOOK" x:Name="pivot" >
+            <!--Pivot item one-->
+            <PivotItem x:Uid="RecipeDetailsPivotItem" Header="recipe" >
+                <Grid x:Name="RecipePanel" Grid.Row="1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="110*"/>
+                        <RowDefinition Height="155*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Title}" Style="{ThemeResource BodyTextBlockStyle}" 
+                               Foreground="{StaticResource AccentBrush}" FontSize="{StaticResource TextStyleExtraLargeFontSize}" 
+                               Margin="0,0,0,5"/>
+                    <Image Source="{Binding ImagePath}" Stretch="UniformToFill" Grid.Row="1"/>
+                    <ScrollViewer Grid.Row="2" Margin="0,10">
+                        <TextBlock x:Name="InstructionsTextBlock" TextWrapping="WrapWholeWords" 
+                           Style="{StaticResource BodyTextBlockStyle}"
+                           Text="{Binding Directions}"/>
+                    </ScrollViewer>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" >
+                        <TextBlock Text="Prep time:" Style="{StaticResource BodyTextBlockStyle}"
+                           Foreground="{StaticResource AccentBrush}"/>
+                        <TextBlock x:Name="PrepTimeTextBlock" Text="{Binding PrepTime}" Style="{StaticResource BodyTextBlockStyle}" Margin="10,0,0,10"/>
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+
+            <!--Pivot item two-->
+            <PivotItem x:Uid="RecipeIngredientsPivotItem" Header="ingredients">
+                <ListView ItemsSource="{Binding Ingredients}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+
+            <!--Pivot item three-->
+            <PivotItem x:Name="PicsPivot" Header="notes">
+                <Grid>
+                    <TextBlock Text="No images found."  HorizontalAlignment="Center"
+                               Visibility="{Binding UserImages, Converter={StaticResource ImagesDisplayConverter}}"  VerticalAlignment="Center" />
+                    <ListBox x:Name="listUserPictures" ItemsSource="{Binding UserPhotos}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Image Source="{Binding Image}" Margin="5"/>
+                                    <Rectangle Fill="#33FFFFFF" Height="50" VerticalAlignment="Bottom"/>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
+                                        <TextBlock Text="{Binding Converter={StaticResource ToStringConverter}}" Margin="10,0,0,5" Style="{ThemeResource HeaderTextBlockStyle}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </PivotItem>
+
+        </Pivot>
+    </Grid>
+</Page>
