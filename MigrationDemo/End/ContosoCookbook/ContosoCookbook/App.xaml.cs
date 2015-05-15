@@ -32,10 +32,9 @@ namespace ContosoCookbook
         public App()
         {
             this.Suspending += OnSuspending;
-            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
         }
 
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
             Frame frame = Window.Current.Content as Frame;
             if (frame == null)
@@ -89,48 +88,11 @@ namespace ContosoCookbook
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+
         }
 
-#if WINDOWS_PHONE_APP
-        protected override void OnActivated(IActivatedEventArgs args)
-        {
-            if (args is FileOpenPickerContinuationEventArgs)
-            {
-                Frame rootFrame = Window.Current.Content as Frame;
-
-                // Do not repeat app initialization when the Window already has content,
-                // just ensure that the window is active
-                if (rootFrame == null)
-                {
-                    // Create a Frame to act as the navigation context and navigate to the first page.
-                    rootFrame = new Frame();
-
-                    if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                    {
-                        //TODO: Load state from previously suspended application
-                    }
-
-                    // Place the frame in the current Window.
-                    Window.Current.Content = rootFrame;
-                }
-
-                if (rootFrame.Content == null)
-                {
-                    if (!rootFrame.Navigate(typeof(RecipeDetailPage)))
-                    {
-                        throw new Exception("Failed to create initial page");
-                    }
-                }
-
-                // Send the args to the target page
-                var p = rootFrame.Content as RecipeDetailPage;
-                p.FilePickerEvent = (FileOpenPickerContinuationEventArgs)args;
-
-                // Ensure the current window is active
-                Window.Current.Activate();
-            }
-        }
-#endif
 
         /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved

@@ -87,6 +87,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\BackButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="RecipeDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -111,6 +115,9 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Controls\BackButton.xaml.cs">
+      <DependentUpon>BackButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ImageSourceToStringConverter.cs" />
     <Compile Include="Converters\UserImagesDisplayConverter.cs" />
     <Compile Include="DataModel\BindableBase.cs" />
@@ -135,13 +142,13 @@
   <ItemGroup>
     <Content Include="Assets\DarkGray.png" />
     <Content Include="Assets\LightGray.png" />
-    <Content Include="Assets\Logo.scale-240.png" />
+    <Content Include="Assets\Logo.scale-250.png" />
     <Content Include="Assets\MediumGray.png" />
-    <Content Include="Assets\SmallLogo.scale-240.png" />
-    <Content Include="Assets\SplashScreen.scale-240.png" />
-    <Content Include="Assets\Square71x71Logo.scale-240.png" />
-    <Content Include="Assets\StoreLogo.scale-240.png" />
-    <Content Include="Assets\WideLogo.scale-240.png" />
+    <Content Include="Assets\SmallLogo.scale-250.png" />
+    <Content Include="Assets\SplashScreen.scale-250.png" />
+    <Content Include="Assets\Square71x71Logo.scale-250.png" />
+    <Content Include="Assets\StoreLogo.scale-250.png" />
+    <Content Include="Assets\WideLogo.scale-250.png" />
     <Content Include="Common\ReadMe.txt" />
     <Content Include="Data\Recipes.txt" />
     <Content Include="Images\chinese\Chinese_1_150_C.jpg" />

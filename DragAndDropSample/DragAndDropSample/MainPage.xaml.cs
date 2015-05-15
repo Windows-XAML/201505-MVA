@@ -174,24 +174,24 @@ namespace DragAndDropSample
             ClearOutput();
         }
 
-async private void DragImage_DragStarting(UIElement sender, DragStartingEventArgs args)
-{
-    // get the file
-    StorageFolder installFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-    StorageFolder subFolder = await installFolder.GetFolderAsync("Assets");
-    var file = await subFolder.GetFileAsync("MSLogoImage.png");
+        async private void DragImage_DragStarting(UIElement sender, DragStartingEventArgs args)
+        {
+            // get the file
+            StorageFolder installFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            StorageFolder subFolder = await installFolder.GetFolderAsync("Assets");
+            var file = await subFolder.GetFileAsync("MSLogoImage.png");
 
-    // turn it into a stream and set it as a bitmap in the datapackage
-    var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
-    args.Data.SetBitmap(RandomAccessStreamReference.CreateFromStream(stream));
+            // turn it into a stream and set it as a bitmap in the datapackage
+            var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            args.Data.SetBitmap(RandomAccessStreamReference.CreateFromStream(stream));
 
-    // also set it as a file in the datapackage
-    var files = new List<StorageFile>();
-    files.Add(file);
-    args.Data.SetStorageItems(files);
+            // also set it as a file in the datapackage
+            var files = new List<StorageFile>();
+            files.Add(file);
+            args.Data.SetStorageItems(files);
 
-    args.Data.RequestedOperation = SetRequestedOperation();
-}
+            args.Data.RequestedOperation = SetRequestedOperation();
+        }
 
         private void DragText_DragStarting(UIElement sender, DragStartingEventArgs args)
         {
@@ -309,14 +309,5 @@ async private void DragImage_DragStarting(UIElement sender, DragStartingEventArg
         }
         #endregion
 
-        private async void Copy_Drop(object sender, DragEventArgs e)
-        {
-            //TitleTextBlock.Text = e.DataView.Properties.Title;
-            //DescriptionTextBlock.Text = e.DataView.Properties.Description;
-            //SharedTextTextBlock.Text = await e.DataView.GetTextAsync();
-            //var photoFile = (StorageFile)(await e.DataView.GetStorageItemsAsync())[0];
-            //var imageSource = new BitmapImage(); imageSource.SetSource(await photoFile.OpenReadAsync());
-            //sharedPhotoImage.Source = imageSource;
-        }
     }
 }

@@ -13,7 +13,6 @@ using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
-using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.StartScreen;
@@ -53,22 +52,6 @@ namespace ContosoCookbook
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
-        }
-
-        private FileOpenPickerContinuationEventArgs _filePickerEventArgs = null;
-        public FileOpenPickerContinuationEventArgs FilePickerEvent
-        {
-            get { return _filePickerEventArgs; }
-            set
-            {
-                _filePickerEventArgs = value;
-                StorageFile pickedFile = null;
-                if (_filePickerEventArgs.Files.Count > 0)
-                {
-                    pickedFile = _filePickerEventArgs.Files[0];
-                }
-                FileOpenPicker_Continuation(pickedFile);
-            }
         }
 
         public RecipeDetailPage()
@@ -153,23 +136,6 @@ namespace ContosoCookbook
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
-
-            var frame = Window.Current.Content as Frame;
-            if (frame.CanGoBack)
-            {
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            }
-            else
-            {
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            }
-
-            SystemNavigationManager.GetForCurrentView().BackRequested += Page_BackRequested;
-        }
-
-        private void Page_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -240,7 +206,7 @@ namespace ContosoCookbook
             }
         }
 
-        private void btnPhoto_Click(object sender, RoutedEventArgs e)
+        private async void btnPhoto_Click(object sender, RoutedEventArgs e)
         {
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;
@@ -248,16 +214,9 @@ namespace ContosoCookbook
             openPicker.FileTypeFilter.Add(".jpg");
             openPicker.FileTypeFilter.Add(".jpeg");
             openPicker.FileTypeFilter.Add(".png");
-#if WINDOWS_APP
+
             StorageFile file = await openPicker.PickSingleFileAsync();
-            FileOpenPicker_Continuation(file);
-#elif WINDOWS_PHONE_APP
-            // Call the FileOpenPicker in Windows Phone mode
-            openPicker.PickSingleFileAndContinue();
-#endif
-        }
-        private async void FileOpenPicker_Continuation(StorageFile file)
-        {
+
             if (file != null)
             {
                 var destFile = await file.CopyAsync(Windows.Storage.ApplicationData.Current.LocalFolder, file.Name, NameCollisionOption.ReplaceExisting);
@@ -265,6 +224,12 @@ namespace ContosoCookbook
                 userPhoto.SetImage(destFile.Path);
                 item.UserPhotos.Add(userPhoto);
             }
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+                Frame.GoBack();
         }
     }
 }
