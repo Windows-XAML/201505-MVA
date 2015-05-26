@@ -43,7 +43,9 @@ namespace RoamingSettingsDemo.Views
         private void RoamingDataChanged(Windows.Storage.ApplicationData sender, object args)
         {
             // Something has changed in the roaming data or settings
-            SetBackgroundFromSettings();
+            var ignore = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, 
+                () => SetBackgroundFromSettings()
+            );
         }
 
         private void SetBackgroundFromSettings()
@@ -59,10 +61,12 @@ namespace RoamingSettingsDemo.Views
                 if (colorName == "Green")
                 {
                     MainGrid.Background = new SolidColorBrush(Colors.Green);
+                    GreenRadioButton.IsChecked = true;
                 }
                 else if (colorName == "Red")
                 {
                     MainGrid.Background = new SolidColorBrush(Colors.Red);
+                    RedRadioButton.IsChecked = true;
                 }
             }
         }

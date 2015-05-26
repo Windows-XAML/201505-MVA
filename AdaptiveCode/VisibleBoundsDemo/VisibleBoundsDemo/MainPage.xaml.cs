@@ -22,6 +22,7 @@ namespace VisibleBoundsDemo
             var viewTitleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;
             DefaultTitleBarBGColor = viewTitleBar.BackgroundColor;
             DefaultTitleBarButtonsBGColor = viewTitleBar.ButtonBackgroundColor;
+
         }
 
         void MainPage_VisibleBoundsChanged(Windows.UI.ViewManagement.ApplicationView sender, object args)

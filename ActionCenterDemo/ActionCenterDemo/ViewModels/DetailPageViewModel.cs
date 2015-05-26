@@ -33,17 +33,21 @@ namespace ActionCenterDemo.ViewModels
             this.MessageItem.IsRead = true;
             await _repository.UpdateAsync(this.MessageItem);
 
+            #region Remove corresponding item from Action Center
             // Also remove it from the Action Center if it is there
-            ToastNotificationManager.History.Remove(parameter);
+            //ToastNotificationManager.History.Remove(parameter);
+            #endregion
 
-            // Set the Badge count on the tile
-            var toasts = ToastNotificationManager.History.GetHistory();
-            if (toasts != null)
-            {
-                var count = toasts.Count();
-                // Sync up the count on the tile
-                TileServices.SetBadgeCountOnTile(count);
-            }
+            #region Sync Tile badge count with unread toasts count from Action Center 
+            //// Set the Badge count on the tile
+            //var toasts = ToastNotificationManager.History.GetHistory();
+            //if (toasts != null)
+            //{
+            //    var count = toasts.Count();
+            //    // Sync up the count on the tile
+            //    TileServices.SetBadgeCountOnTile(count);
+            //}
+            #endregion
         }
 
         private void LoadDesignData()

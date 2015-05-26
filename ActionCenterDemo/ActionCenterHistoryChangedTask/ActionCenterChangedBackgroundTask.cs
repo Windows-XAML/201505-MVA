@@ -46,8 +46,8 @@ namespace ActionCenterHistoryChangedTask
             foreach (var item in toasts)
             {
                 var launchAttr = item.Content.SelectSingleNode("/toast/@launch").NodeValue.ToString();
-                dynamic d = Newtonsoft.Json.Linq.JObject.Parse(launchAttr);
-                var msgID = (string)d.param1;
+                var toastParams = Newtonsoft.Json.JsonConvert.DeserializeObject<ToastParams>(launchAttr);
+                var msgID = toastParams.param1;
 
                 var messageItem = messageItemRepository.Find(p => p.ID == msgID).FirstOrDefault();
                 if (messageItem != null)

@@ -12,7 +12,7 @@
         <vm:MainPageViewModel />
     </Page.DataContext>
 
-    <Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <RelativePanel>
 
             <TextBlock x:Name="InfoTextBlock" HorizontalAlignment="Left" Height="50" Margin="20,20,0,0" TextWrapping="Wrap" 

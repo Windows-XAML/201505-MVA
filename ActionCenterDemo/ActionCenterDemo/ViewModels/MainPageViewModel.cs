@@ -116,7 +116,8 @@ namespace ActionCenterDemo.ViewModels
                 return _deliverToastCommand ?? (_deliverToastCommand = new Common.Command(async () =>
                 {
                     this.Busy = true;
-                    // Generate a new message data item - this simulates one that has come from your cloud backend
+                    // Generate a new message data item - this 
+                    // Simulates a toast coming in from your cloud backend
                     var msgItem = new MessageItem()
                     {
                         ID = Guid.NewGuid().ToString().Split('-')[0].ToString(),

@@ -96,6 +96,7 @@
     <Compile Include="ActionCenterChangedBackgroundTask.cs" />
     <Compile Include="MessageItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToastParams.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
