@@ -1,18 +1,33 @@
 ﻿<Page
-    x:Class="ContosoCookbook.GroupDetailPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ContosoCookbook"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:ContosoCookbook.DataModel"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    mc:Ignorable="d">  
+    xmlns:data="using:ContosoCookbook.DataModel" 
+    xmlns:Controls="using:Template10.Controls"
+    x:Class="ContosoCookbook.GroupDetailPage" 
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="PivotTitleTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Controls:BackButton />
+                <TextBlock Text="Contoso Cookbook" Grid.Column="1"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot x:Uid="Pivot" Title="CONTOSO COOKBOOK" x:Name="pivot" 
-               DataContext="{Binding Group}"
-               d:DataContext="{Binding AllGroups[0], Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}">
+			DataContext="{Binding Group}"
+			d:DataContext="{Binding AllGroups[0], Source={d:DesignInstance IsDesignTimeCreatable=True, Type=data:SampleDataSource}}" 
+			TitleTemplate="{StaticResource PivotTitleTemplate}" 
+               >
             <!--Pivot item one-->
             <PivotItem x:Uid="GroupDetailsPivotItem" Header="{Binding Title}">
                 <Grid x:Name="PivotLayoutGrid">
@@ -21,17 +36,17 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Image Source="{Binding Image}" Stretch="UniformToFill" x:Name="img" Grid.Column="0" 
-                           HorizontalAlignment="Left"/>
+						HorizontalAlignment="Left"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,5,5" 
-                                HorizontalAlignment="Right" VerticalAlignment="Bottom">
+						HorizontalAlignment="Right" VerticalAlignment="Bottom">
                         <TextBlock Text="Total Recipes: " Style="{StaticResource BodyTextBlockStyle}"
-                                    Foreground="{ThemeResource PhoneAccentBrush}"/>
+							Foreground="{ThemeResource AccentBrush}"/>
                         <TextBlock Text="{Binding RecipesCount}" Style="{StaticResource BodyTextBlockStyle}" 
-                                    Foreground="{ThemeResource PhoneAccentBrush}" Margin="10,0,0,0"/>
+							Foreground="{ThemeResource AccentBrush}" Margin="10,0,0,0"/>
                     </StackPanel>
                     <ScrollViewer x:Name="DescriptionScrollViewer" Grid.Row="1" Margin="0,10,0,0">
                         <TextBlock Text="{Binding Description}" TextWrapping="Wrap" HorizontalAlignment="Left" 
-                                   Style="{StaticResource BodyTextBlockStyle}" FontSize="{StaticResource TextStyleLargeFontSize}" />
+							Style="{StaticResource BodyTextBlockStyle}" FontSize="{StaticResource TextStyleLargeFontSize}" />
                     </ScrollViewer>
                 </Grid>
             </PivotItem>
@@ -48,16 +63,16 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Image Source="{Binding Image}" Width="150" Stretch="UniformToFill" HorizontalAlignment="Left" 
-                                       Margin="0,0,0,10" CommonNavigationTransitionInfo.IsStaggerElement="True"/>
+									Margin="0,0,0,10" CommonNavigationTransitionInfo.IsStaggerElement="True"/>
                                 <StackPanel Margin="10,0,0,0" Grid.Column="1">
                                     <TextBlock Text="{Binding Title}"  
-                                               Pivot.SlideInAnimationGroup="1" CommonNavigationTransitionInfo.IsStaggerElement="True" 
-                                               FontSize="18" TextWrapping="WrapWholeWords" MaxLines="3"/>
+										Pivot.SlideInAnimationGroup="1" CommonNavigationTransitionInfo.IsStaggerElement="True" 
+										FontSize="18" TextWrapping="WrapWholeWords" MaxLines="3"/>
                                     <StackPanel Grid.Column="1" Orientation="Horizontal" Pivot.SlideInAnimationGroup="2"
-                                            CommonNavigationTransitionInfo.IsStaggerElement="True" VerticalAlignment="Top" Margin="0,5,0,0">
-                                        <TextBlock Text="Prep time: " Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" />
-                                        <TextBlock Text="{Binding PrepTime}" Style="{StaticResource ListViewItemContentTextBlockStyle}" 
-                                               Margin="10,0,0,0"/>
+										CommonNavigationTransitionInfo.IsStaggerElement="True" VerticalAlignment="Top" Margin="0,5,0,0">
+                                        <TextBlock Text="Prep time: " Style="{StaticResource CaptionTextBlockStyle}" />
+                                        <TextBlock Text="{Binding PrepTime}" Style="{StaticResource CaptionTextBlockStyle}" 
+											Margin="10,0,0,0"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
@@ -66,5 +81,5 @@
                 </ListView>
             </PivotItem>
         </Pivot>
-    </Grid>
+     </Grid>
 </Page>
