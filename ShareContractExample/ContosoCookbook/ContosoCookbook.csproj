@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E977916E-3C97-485A-96FC-0D214F6FC9E3}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ContosoCookbook</RootNamespace>
+    <AssemblyName>ContosoCookbook</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10069.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10069.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Page Include="AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RecipeDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GroupDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Converters\ImageSourceToStringConverter.cs" />
+    <Compile Include="Converters\UserImagesDisplayConverter.cs" />
+    <Compile Include="DataModel\BindableBase.cs" />
+    <Compile Include="DataModel\RecipeDataSource.cs" />
+    <Compile Include="DataModel\SampleDataSource.cs" />
+    <Compile Include="RecipeDetailPage.xaml.cs">
+      <DependentUpon>RecipeDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GroupDetailPage.xaml.cs">
+      <DependentUpon>GroupDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\DarkGray.png" />
+    <Content Include="Assets\LightGray.png" />
+    <Content Include="Assets\Logo.scale-240.png" />
+    <Content Include="Assets\MediumGray.png" />
+    <Content Include="Assets\SmallLogo.scale-240.png" />
+    <Content Include="Assets\SplashScreen.scale-240.png" />
+    <Content Include="Assets\Square71x71Logo.scale-240.png" />
+    <Content Include="Assets\StoreLogo.scale-240.png" />
+    <Content Include="Assets\WideLogo.scale-240.png" />
+    <Content Include="Common\ReadMe.txt" />
+    <Content Include="Data\Recipes.txt" />
+    <Content Include="Images\chinese\Chinese_1_150_C.jpg" />
+    <Content Include="Images\chinese\Chinese_1_600_C.jpg" />
+    <Content Include="Images\chinese\Chinese_2_150_C.jpg" />
+    <Content Include="Images\chinese\Chinese_2_600_C.jpg" />
+    <Content Include="Images\chinese\Chinese_3_150_C.jpg" />
+    <Content Include="Images\chinese\Chinese_3_600_C.jpg" />
+    <Content Include="Images\chinese\Chinese_4_150_C.jpg" />
+    <Content Include="Images\chinese\Chinese_4_600_C.jpg" />
+    <Content Include="Images\chinese\Chinese_5_150_C.jpg" />
+    <Content Include="Images\chinese\Chinese_5_600_C.jpg" />
+    <Content Include="Images\chinese\Chinese_6_150_C.jpg" />
+    <Content Include="Images\chinese\Chinese_6_310_C.jpg" />
+    <Content Include="Images\chinese\Chinese_6_600_C.jpg" />
+    <Content Include="Images\chinese\chinese_group.png" />
+    <Content Include="Images\chinese\chinese_group_detail.png" />
+    <Content Include="Images\chinese\chinese_group_header.png" />
+    <Content Include="Images\french\French_1_150_C.jpg" />
+    <Content Include="Images\french\French_1_600_C.jpg" />
+    <Content Include="Images\french\French_2_150_C.jpg" />
+    <Content Include="Images\french\French_2_310_C.jpg" />
+    <Content Include="Images\french\French_2_600_C.jpg" />
+    <Content Include="Images\french\French_3_150_C.jpg" />
+    <Content Include="Images\french\French_3_600_C.jpg" />
+    <Content Include="Images\french\French_4_150_C.jpg" />
+    <Content Include="Images\french\French_4_600_C.jpg" />
+    <Content Include="Images\french\French_5_150_C.jpg" />
+    <Content Include="Images\french\French_5_600_C.jpg" />
+    <Content Include="Images\french\French_6_150_C.jpg" />
+    <Content Include="Images\french\French_6_600_C.jpg" />
+    <Content Include="Images\french\french_group.png" />
+    <Content Include="Images\french\french_group_detail.png" />
+    <Content Include="Images\french\french_group_header.png" />
+    <Content Include="Images\german\German_1_150_C.jpg" />
+    <Content Include="Images\german\German_1_600_C.jpg" />
+    <Content Include="Images\german\German_2_150_C.jpg" />
+    <Content Include="Images\german\German_2_600_C.jpg" />
+    <Content Include="Images\german\German_3_150_C.jpg" />
+    <Content Include="Images\german\German_3_600_C.jpg" />
+    <Content Include="Images\german\German_4_150_C.jpg" />
+    <Content Include="Images\german\German_4_310_C.jpg" />
+    <Content Include="Images\german\German_4_600_C.jpg" />
+    <Content Include="Images\german\German_5_150_C.jpg" />
+    <Content Include="Images\german\German_5_600_C.jpg" />
+    <Content Include="Images\german\German_6_150_C.jpg" />
+    <Content Include="Images\german\German_6_600_C.jpg" />
+    <Content Include="Images\german\german_group.png" />
+    <Content Include="Images\german\german_group_detail.png" />
+    <Content Include="Images\german\german_group_header.png" />
+    <Content Include="Images\indian\Indian_1_150_C.jpg" />
+    <Content Include="Images\indian\Indian_1_600_C.jpg" />
+    <Content Include="Images\indian\Indian_2_150_C.jpg" />
+    <Content Include="Images\indian\Indian_2_600_C.jpg" />
+    <Content Include="Images\indian\Indian_3_150_C.jpg" />
+    <Content Include="Images\indian\Indian_3_600_C.jpg" />
+    <Content Include="Images\indian\Indian_4_150_C.jpg" />
+    <Content Include="Images\indian\Indian_4_600_C.jpg" />
+    <Content Include="Images\indian\Indian_5_150_C.jpg" />
+    <Content Include="Images\indian\Indian_5_600_C.jpg" />
+    <Content Include="Images\indian\Indian_6_150_C.jpg" />
+    <Content Include="Images\indian\Indian_6_600_C.jpg" />
+    <Content Include="Images\indian\indian_group.png" />
+    <Content Include="Images\indian\indian_group_detail.png" />
+    <Content Include="Images\indian\indian_group_header.png" />
+    <Content Include="Images\italian\Italian_1_150_C.jpg" />
+    <Content Include="Images\italian\Italian_1_600_C.jpg" />
+    <Content Include="Images\italian\Italian_2_150_C.jpg" />
+    <Content Include="Images\italian\Italian_2_600_C.jpg" />
+    <Content Include="Images\italian\Italian_3_150_C.jpg" />
+    <Content Include="Images\italian\Italian_3_600_C.jpg" />
+    <Content Include="Images\italian\Italian_4_150_C.jpg" />
+    <Content Include="Images\italian\Italian_4_310_C.jpg" />
+    <Content Include="Images\italian\Italian_4_600_C.jpg" />
+    <Content Include="Images\italian\Italian_5_150_C.jpg" />
+    <Content Include="Images\italian\Italian_5_310_C.jpg" />
+    <Content Include="Images\italian\Italian_5_600_C.jpg" />
+    <Content Include="Images\italian\Italian_6_150_C.jpg" />
+    <Content Include="Images\italian\Italian_6_600_C.jpg" />
+    <Content Include="Images\italian\italian_group.png" />
+    <Content Include="Images\italian\italian_group_detail.png" />
+    <Content Include="Images\italian\italian_group_header.png" />
+    <Content Include="Images\mexican\Mexican_1_150_C.jpg" />
+    <Content Include="Images\mexican\Mexican_1_600_C.jpg" />
+    <Content Include="Images\mexican\Mexican_2_150_C.jpg" />
+    <Content Include="Images\mexican\Mexican_2_600_C.jpg" />
+    <Content Include="Images\mexican\Mexican_3_150_C.jpg" />
+    <Content Include="Images\mexican\Mexican_3_600_C.jpg" />
+    <Content Include="Images\mexican\Mexican_4_150_C.jpg" />
+    <Content Include="Images\mexican\Mexican_4_600_C.jpg" />
+    <Content Include="Images\mexican\Mexican_5_150_C.jpg" />
+    <Content Include="Images\mexican\Mexican_5_600_C.jpg" />
+    <Content Include="Images\mexican\Mexican_6_150_C.jpg" />
+    <Content Include="Images\mexican\Mexican_6_600_C.jpg" />
+    <Content Include="Images\mexican\mexican_group.png" />
+    <Content Include="Images\mexican\mexican_group_detail.png" />
+    <Content Include="Images\mexican\mexican_group_header.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-US\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
+
