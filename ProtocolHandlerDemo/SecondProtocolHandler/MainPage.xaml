@@ -1,0 +1,16 @@
+﻿<Page
+    x:Class="SecondProtocolHandler.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SecondProtocolHandler"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock Text="You are in the Second w10techpreview protocol handler"
+                   TextWrapping="Wrap" Style="{StaticResource SubtitleTextBlockStyle}" 
+                   Margin="30,39,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="100" Width="325"/>
+
+    </Grid>
+</Page>
