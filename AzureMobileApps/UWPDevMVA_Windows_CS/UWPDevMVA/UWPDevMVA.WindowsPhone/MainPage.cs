@@ -120,8 +120,31 @@ namespace UWPDevMVA
 
         private async Task SyncAsync()
         {
-            await App.MobileService.SyncContext.PushAsync();
-            await todoTable.PullAsync("todoItems", todoTable.CreateQuery());
+            String errorString = null;
+
+            try
+            {
+                await App.MobileService.SyncContext.PushAsync();
+                await todoTable.PullAsync("todoItems", todoTable.CreateQuery()); // first param is query ID, used for incremental sync
+            }
+
+            catch (MobileServicePushFailedException ex)
+            {
+                errorString = "Push failed because of sync errors: " +
+                  ex.PushResult.Errors.Count + " errors, message: " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                errorString = "Pull failed: " + ex.Message +
+                  "\n\nIf you are still in an offline scenario, " +
+                  "you can try your Pull again when connected with your Mobile Serice.";
+            }
+
+            if (errorString != null)
+            {
+                MessageDialog d = new MessageDialog(errorString);
+                await d.ShowAsync();
+            }
         }
 
         #endregion 
