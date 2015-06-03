@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 
-namespace Template10.Common
+namespace Blank1.Common
 {
     // BootStrapper is a drop-in replacement of Application
     // - OnInitializeAsync is the first in the pipeline, if launching
@@ -28,40 +28,32 @@ namespace Template10.Common
             Resuming += (s, e) => { OnResuming(s, e); };
             Suspending += async (s, e) =>
             {
-                // one, global deferral
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
-                    // date the cache
-                    NavigationService.State().Values[CacheKey] = DateTime.Now.ToString();
-                    // call view model suspend (OnNavigatedfrom)
                     await NavigationService.SuspendingAsync();
-                    // call system-level suspend
                     await OnSuspendingAsync(s, e);
                 }
                 finally { deferral.Complete(); }
             };
+
+            // enable thread dispatch
+            var dispatcher = Window.Current.Dispatcher;
+            Dispatch = async action =>
+            {
+                if (dispatcher.HasThreadAccess) { action(); }
+                else { await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()); }
+            };
         }
 
-        protected override void OnWindowCreated(WindowCreatedEventArgs args)
-        {
-            this._dispatcher = args.Window.Dispatcher;
-        }
 
         #region properties
 
         public Frame RootFrame { get; set; }
+        public Action<Action> Dispatch { get; private set; }
+        public bool EnableRestoreNavigationState { get; set; } = true;
         public Services.NavigationService.NavigationService NavigationService { get; private set; }
         protected Func<SplashScreen, Page> SplashFactory { get; set; }
-        public TimeSpan CacheMaxDuration { get; set; } = TimeSpan.MaxValue;
-        private const string CacheKey = "Setting-Cache-Date";
-
-        private CoreDispatcher _dispatcher;
-        public async void Dispatch(Action action)
-        {
-            if (_dispatcher.HasThreadAccess) { action(); }
-            else { await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()); }
-        }
 
         #endregion
 
@@ -108,25 +100,9 @@ namespace Template10.Common
                 Window.Current.Content = splashScreen;
             }
 
-            // setup frame
             RootFrame = RootFrame ?? new Frame();
             RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
             NavigationService = new Services.NavigationService.NavigationService(RootFrame);
-
-            // expire state
-            var state = NavigationService.State();
-            if (state.Values.ContainsKey(CacheKey))
-            {
-                DateTime cacheDate;
-                if (DateTime.TryParse(state.Values[CacheKey]?.ToString(), out cacheDate))
-                {
-                    var cacheAge = DateTime.Now.Subtract(cacheDate);
-                    if (cacheAge >= CacheMaxDuration)
-                    {
-                        ClearState();
-                    }
-                }
-            }
 
             // the user may override to set custom content
             await OnInitializeAsync();
@@ -140,12 +116,17 @@ namespace Template10.Common
                         await OnStartAsync(StartKind.Launch, e);
                         break;
                     }
-                case ApplicationExecutionState.ClosedByUser:
                 case ApplicationExecutionState.Terminated:
+                case ApplicationExecutionState.ClosedByUser:
                     {
-                        // restore if you need to/can do
-                        var restored = NavigationService.RestoreSavedNavigation();
-                        if (!restored)
+                        if (EnableRestoreNavigationState)
+                        {
+                            // restore if you need to/can do
+                            var restored = NavigationService.RestoreSavedNavigation();
+                            if (!restored)
+                                await OnStartAsync(StartKind.Launch, e);
+                        }
+                        else
                         {
                             await OnStartAsync(StartKind.Launch, e);
                         }
@@ -170,27 +151,16 @@ namespace Template10.Common
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
                 args.Handled = true;
-                RaiseBackRequested();
+                OnBackRequested();
             };
 
             // Hook up keyboard and mouse Back handler
             var keyboard = new Services.KeyboardService.KeyboardService();
-            keyboard.AfterBackGesture = () => RaiseBackRequested();
+            keyboard.AfterBackGesture = () => OnBackRequested();
 
             // Hook up keyboard and house Forward handler
-            keyboard.AfterForwardGesture = () => RaiseForwardRequested();
+            keyboard.AfterForwardGesture = () => OnForwardRequested();
         }
-
-        private void ClearState()
-        {
-            var state = NavigationService.State();
-            foreach (var item in state.Containers)
-            {
-                state.DeleteContainer(item.Key);
-            }
-            state.Values.Clear();
-        }
-
 
         /// <summary>
         /// Default Hardware/Shell Back handler overrides standard Back behavior that navigates to previous app
@@ -200,7 +170,7 @@ namespace Template10.Common
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RaiseBackRequested()
+        private void OnBackRequested()
         {
             var args = new HandledEventArgs();
             BackRequested?.Invoke(this, args);
@@ -212,7 +182,7 @@ namespace Template10.Common
             }
         }
 
-        private void RaiseForwardRequested()
+        private void OnForwardRequested()
         {
             var args = new HandledEventArgs();
             ForwardRequested?.Invoke(this, args);

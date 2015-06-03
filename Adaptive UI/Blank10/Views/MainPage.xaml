@@ -1,0 +1,115 @@
+﻿<Page
+    x:Class="Blank10.Views.MainPage"
+    xmlns:local="using:Blank10.Views"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Blank10.ViewModels"
+    mc:Ignorable="d">
+
+    <RelativePanel Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualState000min">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+<VisualState.Setters>
+    <Setter Target="MyText01.FontSize" Value="24" />
+    <Setter Target="MyImage.Stretch" Value="UniformToFill" />
+    <Setter Target="MyImage.Height" Value="150" />
+</VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualState500min">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="501" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MyText01.FontSize" Value="24" />
+                        <Setter Target="MyText02.FontSize" Value="11" />
+                        <Setter Target="MyImage.Width" Value="150" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualState800min">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="VisualState1000min">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MyImage.Width" Value="350" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <TextBlock x:Name="Text00" Margin="12,12,12,0" 
+                   Foreground="SteelBlue" Text="Screen size" />
+
+        <Image Source="ms-appx:///Images/cat.jpg" Margin="12,12,0,0"
+               x:Name="MyImage" Stretch="Uniform" 
+               RelativePanel.Below="Text00" Width="225"
+               RelativePanel.AlignLeftWith="Text00" />
+
+        <TextBlock FontSize="32" TextWrapping="Wrap"
+                   Foreground="Goldenrod" x:Name="MyText01"
+                   RelativePanel.RightOf="MyImage" Margin="12,12,12,0"
+                   RelativePanel.AlignTopWith="MyImage">
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+        </TextBlock>
+
+        <ScrollViewer x:Name="MyText02"
+                      VerticalScrollBarVisibility="Auto"
+                      RelativePanel.Below="MyText01" Margin="12"
+                      RelativePanel.AlignLeftWith="MyText01">
+            <RichTextBlock FontSize="18" TextWrapping="Wrap" Foreground="DimGray">
+                <Paragraph LineStackingStrategy="MaxHeight">
+                    <InlineUIContainer>
+                        <Grid Height="50" Width="50" Margin="0,0,12,0" Background="SteelBlue">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="28">L</TextBlock>
+                        </Grid>
+                    </InlineUIContainer>
+                    <Run>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </Run>
+                </Paragraph>
+                <Paragraph/>
+                <Paragraph Margin="12,0,0,0" x:Name="SnappointText">
+                    <Run Text="Snappoints" FontWeight="Black" />
+                    <LineBreak />
+                    <Run Text="&#x27A4; 0-500 epx" />
+                    <LineBreak />
+                    <Run Text="&#x27A4; 500-800 epx" />
+                    <LineBreak />
+                    <Run Text="&#x27A4; 800-1000 epx" />
+                    <LineBreak />
+                    <Run Text="&#x27A4; 1000+ epx" />
+                </Paragraph>
+                <Paragraph/>
+                <Paragraph>
+                    <Run>
+                        Sit voluptatem accusantium doloremque laudantium, 
+                    totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae 
+                    dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
+                    sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam 
+                    est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam 
+                    eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad 
+                    minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid 
+                    ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+                    quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                    </Run>
+                </Paragraph>
+            </RichTextBlock>
+        </ScrollViewer>
+
+    </RelativePanel>
+
+</Page>

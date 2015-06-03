@@ -9,22 +9,16 @@ namespace Template10.Triggers
 {
     public class DeviceFamilyTrigger : StateTriggerBase
     {
-        //private variables
         private string _deviceFamily;
-        //Public property
-
         public string DeviceFamily
         {
-            get
-            {
-                return _deviceFamily;
-            }
+            get { return _deviceFamily; }
             set
             {
-                _deviceFamily = value;
-                var qualifiers = Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().QualifierValues;
+                var qualifiers = Windows.ApplicationModel.Resources.Core
+                    .ResourceContext.GetForCurrentView().QualifierValues;
                 if (qualifiers.ContainsKey("DeviceFamily"))
-                    SetActive(qualifiers["DeviceFamily"] == _deviceFamily);
+                    SetActive(qualifiers["DeviceFamily"] == (_deviceFamily = value));
                 else
                     SetActive(false);
             }

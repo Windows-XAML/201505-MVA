@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template10.Mvvm
+namespace Blank1.Mvvm
 {
     // http://codepaste.net/jgxazh
     using System.Diagnostics;

@@ -26,5 +26,20 @@ namespace Template10.Views
         {
             this.InitializeComponent();
         }
+
+        async void Alert(string messageId)
+        {
+            var loader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            var title = loader.GetString(string.Format("{0}.Title", messageId));
+            var message = loader.GetString(string.Format("{0}.Message", messageId));
+            var button = loader.GetString(string.Format("{0}.Button", messageId));
+            var dialog = new ContentDialog
+            {
+                Title = title,
+                Content = message,
+                PrimaryButtonText = button
+            };
+            await dialog.ShowAsync();
+        }
     }
 }

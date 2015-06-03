@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="Blank1.Views.MainPage"
+    xmlns:local="using:Blank1.Views"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Blank1.ViewModels"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <!-- content -->
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Margin="12" Click="{x:Bind ViewModel.Goto2}">Go to page 2</Button>
+
+    </Grid>
+</Page>

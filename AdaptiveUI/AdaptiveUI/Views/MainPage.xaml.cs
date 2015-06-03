@@ -28,7 +28,6 @@ namespace AdaptiveUI.Views
     {
         public MainPage()
         {
-            // Intialize xaml
             this.InitializeComponent();
         }
 
